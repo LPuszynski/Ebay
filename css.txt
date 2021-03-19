@@ -1,0 +1,86 @@
+body{
+			background-color: #8b6240;
+		}
+
+#tlois{
+	width:100%;
+	background-color:rgb(15,33,64);
+	font-weight: bolder;
+	color:white;
+	font-family:Verdana;  
+}
+
+#Connect{
+	background-color:rgb(15,33,64);
+	border: none;
+	color: white;
+	font-weight: bolder;
+	font-family:Verdana;  
+}
+			
+#title{
+			color:#330000;
+			width:100%;
+			height: 60px;			
+            font-family:Verdana;   
+			text-align:center; 
+			margin-left:0%;
+			font-size: 43px;
+}
+
+#Categories{
+ 
+			background-color:#ccaa66;
+			/*color:#7e3300;*/
+			width:100%;	  
+            font-family:Verdana;   
+			margin-left:0%;	 
+			font-size: 30px;
+			
+		}
+
+#cba{
+	background-color:white;
+	width:100%;
+}
+
+#abc{
+	background-color:white;
+	width:60%;
+	margin-left:20%;
+}
+
+
+
+.images{
+            height:600px;
+            /*width: 800px;*/
+			width:100%;
+			/*margin-left:30%;*/
+            
+        }
+
+  
+#bottom{
+background-color:rgb(39,55,83);
+}
+	
+#credits{
+background-color:#825c3a;
+}	
+
+.images{
+            height: 400px;
+            width: 800px;
+			margin-left:30%;
+            
+        }
+
+  
+#bottom{
+background-color:#0A2B7E;
+}
+	
+#credits{
+background-color:#825c3a;
+}	
