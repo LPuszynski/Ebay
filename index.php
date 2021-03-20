@@ -18,7 +18,11 @@
 </head>
 <body>
 <div id="tlois">
-	 &emsp;CIGAR SHOP SINCE 1955 &emsp; &emsp; &emsp;&emsp; &emsp;&emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; <a href="connect.php">LOGIN / REGISTER</a> 
+	 &emsp;CIGAR SHOP SINCE 1955 &emsp; &emsp; &emsp;&emsp; &emsp;&emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; 
+	 <a href="register.php">REGISTER</a> 
+	 <a href="login.php">LOGIN</a>
+	 &emsp; &emsp; &emsp;&emsp; &emsp;  &emsp; &emsp; &emsp;&emsp;&emsp;&emsp; &emsp; &emsp;&emsp; &emsp;
+	 <a href="sellerRegister.php">Become a seller</a>
 </div>	
 
 <div id="title"> 
