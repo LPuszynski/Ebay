@@ -29,9 +29,9 @@
 	Cigar Shop
 </div>
 <div id="Categories">
-&emsp;<a href="index.html">Buy</a>    &emsp;     
+&emsp;<a href="cigars.php">Buy</a>    &emsp;     
      &emsp;  
-<a href="announcements.html">Sell </a>    &emsp; &emsp; &emsp; &emsp; &emsp; 
+<a href="sellObject.php">Sell </a>    &emsp; &emsp; &emsp; &emsp; &emsp; 
 <a href="financing.html"><img src="basket.png " height="20" width="20" ></a>   
 </div>
 <div id="Carousel">

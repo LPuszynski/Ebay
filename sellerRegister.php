@@ -20,9 +20,10 @@
 <body>
 
 <?php
+$profilFound = 0;
 try
 {
-	$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', '');
+	$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', '');/* Port de thomas = 3307 / Port de Lois = 3306 */
 }
 catch (Exception $e)
 {
@@ -49,6 +50,8 @@ if (isset ($_POST['submit'])){
 	}
 $records = $db->prepare('INSERT INTO seller (email, password, lastname, firstname) VALUES ("'.$mail.'", "'.$password.'", "'.$lastname.'", "'.$firstname.'")');
 $records->execute();
+echo "New seller account registered"; /* A tej, j'essaye juste */
+$profilFound = 2;
 }
 ?>
 
