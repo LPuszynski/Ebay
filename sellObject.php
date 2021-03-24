@@ -10,7 +10,7 @@
 
 </div id="SellObject">
 <div id="Sell_title">
- Sell and object : 
+ Sell an object : 
 </div>
 
 <form action="" method="post">
@@ -18,11 +18,15 @@
 <select name="Category">
 <option value="Cigars">Cigars</option>
 <option value="Accessories">Accessories </option>
-</select><br><br>
+</select><br>
 Name of the product : <input type="text" id="name" name="name"><br>
 Description of the product : <input type="name" id="description" name="description"><br>
-Picture of the product :  <br>
-Price of the product : <input type="text" id="price" name="price"><br>
+Picture of the product : <input type="file" id="product_picture" name="product_picture"> <br>
+<select name="saleType">
+<option value="1">Sell it now</option>
+<option value="0">Auctions</option>
+</select><br>
+Price of the product (£): <input type="text" id="price" name="price"><br>
 
 </div>
  <input type="submit" name="submit" value="SUBMIT">
@@ -50,12 +54,30 @@ Email info@cigarshop.com <br>
 
 
 <?php
+
+    try
+    {
+    	//$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
+	$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
+    }
+    catch (Exception $e)
+    {
+        die('Erreur : ' . $e->getMessage());
+    }
+
         if(isset($_POST['submit'])){
+            $category =$_POST['Category'];
             $name = $_POST['name'];
+            $picture=$_POST['product_picture']; 
+            $description = $_POST['description'];
+            $price = $_POST['price']; 
+            $buyItNow=$_POST['saleType']; 
             
-            $price = $_POST['address'];
-            $total = $_POST['total'];
-           
+
+            $records = $db->prepare('INSERT INTO item (name, photos, description, price, category, BuyNow) VALUES ("'.$name.'", "'.$picture.'", "'.$description.'", "'.$price.'", "'.$category.'","'.$buyItNow.'")');
+            $records->execute();
+
+             /*echo ' Category :' .$category. '/ name :' .$name. '/ photo: '.$picture.' / Description: '.$description.'/ Price: '.$price;*/
         }
     ?>
 </body>

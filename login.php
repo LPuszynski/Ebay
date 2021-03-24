@@ -20,12 +20,13 @@
 <body>
 
 <?php
-$profilFound = 0;
-
+session_start();
+$_SESSION['profilFound'] = 0;
 //connection cith the db
 try
 {
-	$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', '');
+$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', '');	
+//$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
 }
 catch (Exception $e)
 {
@@ -48,24 +49,30 @@ if (isset ($_POST['submit'])){
 	//If he is a customer
 	$stmt = $db->prepare('SELECT * FROM customer WHERE email="'.$mail.'"');
 	$stmt->execute();
-	$user = $stmt->fetch();
-	$stmt2 = $db->prepare('SELECT * FROM customer WHERE password="'.$password.'"');
-	$stmt2->execute();
-	$user2 = $stmt2->fetch();
-	if ($user && $user2) {
-		$profilFound = 1; //He is a customer in the DB
-	}
+	$users = $stmt->fetchAll();
+	foreach($users as $user):
+		if (strcmp ( $user['password'], $password) == 0){
+			$_SESSION['id']=$user['id'];
+			$_SESSION['lastName']=$user['lastname'];
+			$_SESSION['firstName']=$user['firstname'];	
+			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
+			$_SESSION['profilFound'] = 1; //He is a customer in the DB
+		}
+	endforeach;
 
 	//If he is a seller
 	$stmt = $db->prepare('SELECT * FROM seller WHERE email="'.$mail.'"');
 	$stmt->execute();
-	$user = $stmt->fetch();
-	$stmt2 = $db->prepare('SELECT * FROM seller WHERE password="'.$password.'"');
-	$stmt2->execute();
-	$user2 = $stmt2->fetch();
-	if ($user && $user2) {
-		$profilFound = 2; //He is a seller in the DB
-	}
+	$users = $stmt->fetchAll();
+	foreach($users as $user):
+		if (strcmp ( $user['password'], $password) == 0){
+			$_SESSION['id']=$user['id'];
+			$_SESSION['lastName']=$user['lastname'];
+			$_SESSION['firstName']=$user['firstname'];	
+			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
+			$_SESSION['profilFound'] = 2; //He is a customer in the DB
+		}
+	endforeach;
 }
 ?>
 

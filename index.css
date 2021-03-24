@@ -7,8 +7,16 @@ body{
 	background-color:rgb(15,33,64);
 	font-weight: bolder;
 	color:white;
-	font-family:Verdana;  
+	font-family:Verdana;
+	display:flex;
+	justify-content:space-between;
 }
+
+a.admin{
+	margin-right:10px;
+
+}
+
 
 #Connect{
 	background-color:rgb(15,33,64);
@@ -92,3 +100,62 @@ height:50px;
 #signInSeller{
 	color: blue;
 }
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+
+
+.wrapper {
+	width: 100%;
+	margin-left:0px ;
+}
+	.wrapper .fas {
+		font-size: 40px;
+		margin-top: 45px;
+		margin-left: 60%;
+		color: rgb(15,33,64);
+	}
+	.wrapper ul {
+		list-style: none;
+		margin-top: 2%;
+		float:left;
+	}
+
+		.wrapper ul li {
+			background: rgb(15,33,64);
+			width: 170px;
+			border: 1px solid #fff;
+			height: 50px;
+			line-height: 50px;
+			text-align: center;
+			float: left;
+			color: #fff;
+			font-size: 16px;
+			position: relative;
+			font-family: poppins;
+			text-transform: uppercase;
+			font-weight: bold;
+		}
+
+			.wrapper ul li:hover {
+				background: crimson;
+			}
+
+		.wrapper ul ul {
+			display: none;
+		}
+
+		.wrapper ul li:hover > ul {
+			display: block;
+		}
+
+		.wrapper ul ul ul {
+			margin-left: 170px;
+			top: 0;
+			position: absolute;
+		}
+
+		

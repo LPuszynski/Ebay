@@ -3,11 +3,8 @@
 <html lang="en">
 <head>
 <link rel="icon" type="image/png" href="icon.png"/>
-<link rel="stylesheet" href="index.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-	
-
+<link rel="stylesheet" href="index.css">	
+<script src="https://kit.fontawesome.com/3581d4e558.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="index.js"></script>
 <title>Cigar shop</title>
@@ -17,23 +14,58 @@
 
 </head>
 <body>
+<!--
+<div class="wrapper">
+    <ul>
+
+<li> Category
+            <ul>
+<li><a href="cigars.php">Cigars</a></li>
+<li><a href="">Accessories</li></li>
+</ul><li> <a href="sellObject.php">Sell </a></li>
+<li><a href="">Your account </a></li>
+</div>
+-->
+
 <div id="tlois">
 	 &emsp;CIGAR SHOP SINCE 1955 &emsp; &emsp; &emsp;&emsp; &emsp;&emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; 
-	 <a href="register.php">REGISTER</a> 
-	 <a href="login.php">LOGIN</a>
+	 <a href="register.php">REGISTER</a> &emsp; &emsp;
+	 <a href="sellerRegister.php">BECOME A SELLER</a>
 	 &emsp; &emsp; &emsp;&emsp; &emsp;  &emsp; &emsp; &emsp;&emsp;&emsp;&emsp; &emsp; &emsp;&emsp; &emsp;
-	 <a href="sellerRegister.php">Become a seller</a>
+	 <a href="login.php">LOGIN</a>  &emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;
+	<a href="" class="admin" > <i class="fas fa-user-cog"></i> </a>
 </div>	
+
 
 <div id="title"> 
 	Cigar Shop
 </div>
+
+<!--  TEST TA CAPTE
 <div id="Categories">
-&emsp;<a href="index.html">Buy</a>    &emsp;     
+&emsp;<a href="cigars.php">Buy</a>    &emsp;     
      &emsp;  
-<a href="announcements.html">Sell </a>    &emsp; &emsp; &emsp; &emsp; &emsp; 
+<a href="sellObject.php">Sell </a>    &emsp; &emsp; &emsp; &emsp; &emsp; 
 <a href="financing.html"><img src="basket.png " height="20" width="20" ></a>   
 </div>
+-->
+
+
+<div class="wrapper">
+    <ul>
+	<li><a href="index.php">Home</li>
+<li> Categories
+            <ul>
+<li><a href="cigars.php">Cigars</a></li>
+<li><a href="">Accessories</li></li>
+</ul><li> <a href="sellObject.php">Sell </a></li>
+<li><a href="">Your account </a></li></ul>
+<a href="cart.php"><i class="fas fa-shopping-cart"></i></a>
+</div>
+
+
+
+
 <div id="Carousel">
 	
 	 <img src="cigares1.jpg" class="images" id="cigare">

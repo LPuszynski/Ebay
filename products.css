@@ -1,0 +1,62 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap');
+
+body {
+    background-color: #7695E3;
+  
+}
+
+h1{
+    text-align:center;
+    margin-bottom:40px;
+
+
+}
+
+button{
+
+    margin-bottom:10px;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: -5%;
+}
+
+.product {
+    background-color: white;
+    height: 500px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 40px;
+    align-items: center;
+    margin-top: 3%;
+}
+
+.description {
+    color: saddlebrown;
+    text-align: center;
+    padding: 10px;
+    font-family: 'Syne Mono', monospace;
+}
+
+.price {
+    color: red;
+    margin-top: -10px;
+    font-size: 25px;
+    font-family: 'Syne Mono', monospace;
+}
+
+.BuyNow{
+
+    display:flex;
+    flex-direction:column;
+}
+
+.BuyItNow{
+
+    margin-bottom:15px;
+}
