@@ -57,8 +57,10 @@ Email info@cigarshop.com <br>
 
     try
     {
+
     	//$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
 	$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
+
     }
     catch (Exception $e)
     {
@@ -78,6 +80,7 @@ Email info@cigarshop.com <br>
             $records->execute();
 
              /*echo ' Category :' .$category. '/ name :' .$name. '/ photo: '.$picture.' / Description: '.$description.'/ Price: '.$price;*/
+
         }
     ?>
 </body>
