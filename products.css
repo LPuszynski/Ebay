@@ -22,8 +22,7 @@ button{
     justify-content:center;
     align-items:center;
     flex-wrap:wrap;
-
-
+    margin-top: -5%;
 }
 
 .product {
@@ -34,6 +33,7 @@ button{
     flex-direction:column;
     margin-right:40px;
     align-items:center;
+    margin-top: 3%;
 }
 
 .description {

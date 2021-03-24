@@ -17,6 +17,8 @@
 
 </head>
 <body>
+
+
 <div id="tlois">
 	 &emsp;CIGAR SHOP SINCE 1955 &emsp; &emsp; &emsp;&emsp; &emsp;&emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; 
 	 <a href="register.php">REGISTER</a> 
@@ -32,7 +34,13 @@
 &emsp;<a href="cigars.php">Buy</a>    &emsp;     
      &emsp;  
 <a href="sellObject.php">Sell </a>    &emsp; &emsp; &emsp; &emsp; &emsp; 
-<a href="financing.html"><img src="basket.png " height="20" width="20" ></a>   
+<a href="financing.html"><img src="basket.png " height="20" width="20" ></a> 
+<?php
+session_start();
+if($_SESSION['profilFound']!=0){
+	echo '&emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp; &emsp; &emsp;'.$_SESSION['firstName'].'&emsp; &emsp;'.$_SESSION['lastName'];
+}
+?>  
 </div>
 <div id="Carousel">
 	
