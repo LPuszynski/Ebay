@@ -9,13 +9,11 @@
 <body>
 <?php 
 session_start();
-if ($_SESSION['profilFound']==0){
-    echo 'You must log in if you want to access to your shopping cart'; //Faire un truc plus soins pour quand le mec est pas co genre un bouton pour qu'il se log et tout
-}
-else{
+
     $total = 0;
     //connection cith the db
     try{
+        $db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
     /*$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', '');*/ /* Port de thomas = 3307 / Port de Lois = 3306 */
 
         
@@ -77,7 +75,6 @@ else{
         echo "<div class='totalPrice'>";
         echo "Total price of your cart : ".$total."$";
         echo "</div>";
-    }
     ?>
 
 </body>

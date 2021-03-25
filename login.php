@@ -75,6 +75,9 @@ if (isset ($_POST['submit'])){
 			$_SESSION['profilFound'] = 2; //He is a customer in the DB
 		}
 	endforeach;
+	if($_SESSION['profilFound'] == 0){    //in order to allow a visitor to have a cart
+		$_SESSION['id']=0;
+	}
 }
 ?>
 

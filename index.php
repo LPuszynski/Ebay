@@ -68,7 +68,7 @@
 <li><a href="cigars.php">Cigars</a></li>
 <li><a href="">Accessories</li></li>
 </ul><li> <a href="sellObject.php">Sell </a></li>
-<li><a href="">Your account </a></li></ul>
+<li><a href="yourAccount">Your account </a></li></ul>
 <?php
 session_start();	
 if($_SESSION['profilFound']!=0){
