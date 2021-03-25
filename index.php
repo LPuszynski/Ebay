@@ -56,12 +56,6 @@
 <a href="financing.html"><img src="basket.png " height="20" width="20" ></a> 
 </div>
 -->
-<?php
-session_start();
-if($_SESSION['profilFound']!=0){
-	echo '&emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp; &emsp; &emsp;'.$_SESSION['firstName'].'&emsp; &emsp;'.$_SESSION['lastName'];
-}
-?>  
 
 
 
@@ -75,6 +69,12 @@ if($_SESSION['profilFound']!=0){
 <li><a href="">Accessories</li></li>
 </ul><li> <a href="sellObject.php">Sell </a></li>
 <li><a href="">Your account </a></li></ul>
+<?php
+session_start();	
+if($_SESSION['profilFound']!=0){
+	echo '&emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp; &emsp; &emsp;'.$_SESSION['firstName'].'&emsp; &emsp;'.$_SESSION['lastName'];
+}
+?>
 <a href="cart.php"><i class="fas fa-shopping-cart"></i></a>
 </div>
 

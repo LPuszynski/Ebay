@@ -115,8 +115,8 @@ height:50px;
 }
 	.wrapper .fas {
 		font-size: 40px;
-		margin-top: 45px;
-		margin-left: 60%;
+		margin-top: -20%;
+		margin-left: 70%;
 		color: rgb(15,33,64);
 	}
 	.wrapper ul {

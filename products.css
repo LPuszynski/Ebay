@@ -57,7 +57,22 @@ button{
     flex-direction:column;
 }
 
-.BuyItNow{
+.cart{
+    margin-right: 88%;
+}
 
+.BuyItNow{
     margin-bottom:15px;
+}
+
+.totalPrice{
+    text-align:right;
+    margin-top: 1%;
+}
+
+.quantity{
+    color: saddlebrown;
+    text-align: center;
+    font-family: 'Syne Mono', monospace;
+    margin-bottom: 1%;
 }

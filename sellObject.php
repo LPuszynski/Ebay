@@ -27,7 +27,7 @@ Picture of the product : <input type="file" id="product_picture" name="product_p
 <option value="0">Auctions</option>
 </select><br>
 Price of the product (£): <input type="text" id="price" name="price"><br>
-
+Quantity: <input type="text" id="quantity" name="quantity"><br>
 </div>
  <input type="submit" name="submit" value="SUBMIT">
 </div>
@@ -59,7 +59,6 @@ Email info@cigarshop.com <br>
     {
 
     	//$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
-	$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
 
     }
     catch (Exception $e)
@@ -73,10 +72,10 @@ Email info@cigarshop.com <br>
             $picture=$_POST['product_picture']; 
             $description = $_POST['description'];
             $price = $_POST['price']; 
-            $buyItNow=$_POST['saleType']; 
-            
+            $buyItNow=$_POST['saleType'];
+            $quantity = $_POST['quantity'];
 
-            $records = $db->prepare('INSERT INTO item (name, photos, description, price, category, BuyNow) VALUES ("'.$name.'", "'.$picture.'", "'.$description.'", "'.$price.'", "'.$category.'","'.$buyItNow.'")');
+            $records = $db->prepare('INSERT INTO item (name, photos, description, price, category, BuyNow, quantity) VALUES ("'.$name.'", "'.$picture.'", "'.$description.'", "'.$price.'", "'.$category.'","'.$buyItNow.'","'.$quantity.'")');
             $records->execute();
 
              /*echo ' Category :' .$category. '/ name :' .$name. '/ photo: '.$picture.' / Description: '.$description.'/ Price: '.$price;*/
