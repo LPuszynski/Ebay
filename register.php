@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 <link rel="icon" type="image/png" href="icon.png"/>
-<link rel="stylesheet" href="index.css">
 <link rel="stylesheet" href="form.css">
 
 
 	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="validateform.js"></script>
+
 <title>Create an account</title>
 
 </head>
@@ -27,6 +27,7 @@
 	Cigar Shop
 </div>
 
+<section>
 <div class="wrapper">
     <ul>
 	<li><a href="index.php">Home</li>
@@ -76,25 +77,25 @@ if (isset ($_POST['submit'])){
 	{
 		$address=$_POST['Address'];
 	}
-	if (isset($POST['postal_code']))
+	if (isset($_POST['postal_code']))
 	{
-		$postal_code=$POST['postal_code'];
+		$postal_code=$_POST['postal_code'];
 	}
-	if (isset($POST['FullName']))
+	if (isset($_POST['FullName']))
 	{
-	 $fullName=$POST['FullName'];
+	 $fullName=$_POST['FullName'];
 	}
-	if (isset($POST['card_number']))
+	if (isset($_POST['card_number']))
 	{
-		$card_number=$POST['card_number'];
+		$card_number=$_POST['card_number'];
 	}
-	if (isset($POST['expiration_date']))
+	if (isset($_POST['expiration_date']))
 	{
-	 $expiration_date=$POST['expiration_date'];
+	 $expiration_date=$_POST['expiration_date'];
 	}
-	if(isset($POST['cvc']))
+	if(isset($_POST['cvc']))
 	{
-		$cvc=$POST['cvc'];
+		$cvc=$_POST['cvc'];
 	}
 
 
@@ -110,35 +111,37 @@ $records->execute();
 	<h3>PERSONAL INFORMATIONS</h3>
 			
 				 
-				<input type="text" id="firstname" name="firstname" placeholder="First name"> <br>
-				<input type="text" id="lastname" name="lastname" placeholder="Last name"><br>
+				<input type="text" class="infos" id="firstname" name="firstname" placeholder="First name"> <br>
+				<input type="text" class="infos" id="lastname" name="lastname" placeholder="Last name"><br>
 				
-				<input type="text" id="mail" name="mail" placeholder="Mail"> <br>
+				<input type="text"  class="infos" id="mail" name="mail" placeholder="Mail"> <br>
 
-				<input type="password" id="password" name="password" placeholder="Password"> <br>
-				<input type="text" id="city" name="city" placeholder="City"> <br>
-				<input type="text" id="Address" name="Address" placeholder="Address line"> <br>
-				<input type="text" id="postal_code" name="postal_code" placeholder="Postal code"> <br>
+				<input type="password" class="infos" id="password" name="password" placeholder="Password"> <br>
+				<input type="text" class="infos"  id="city" name="city" placeholder="City"> <br>
+				<input type="text" class="infos" id="Address" name="Address" placeholder="Address line"> <br>
+				<input type="number"  class="infos" id="postal_code" name="postal_code" placeholder="Postal code" data-mask='00000'> <br>
 
 			<div id="VisaMethod">
 		<h3> Payment details</h3>
-		<input type="text" id="FullName" name="FullName" placeholder="Full Name"><br>
-		<input type="text" id="card_number" name="card_number" placeholder="Credit card number"><br>
-		<input type="text" id="expiration_date" name="expiration_date" placeholder="Expiration date"><br>
-		<input type="text" id="cvc" name="cvc" placeholder="CVC"><br>
+		<input type="text" class="infos" id="FullName" name="FullName" placeholder="Full Name"><br>
+		<input type="number" class="infos" id="card_number" name="card_number" placeholder="Credit card number"><br>
+		<input type="text" class="infos" id="expiration_date" name="expiration_date" placeholder="Expiration date"><br>
+		<input type="number" class="infos" id="cvc" name="cvc" placeholder="CVC"><br>
 
 		</div>
 		
 			<br> 
-			<input type = "submit"  value = "submit" name = "submit"/>
+			<input type = "submit" class="bouton"  value = "SUBMIT" name = "submit"/>
+			
+			
 
 	</div>
 
 </form>
+	</section>	
 		
 		
-		
-			<button onclick="reset()">Reset</button>
+			
 
 			
 <div id="bottom"> 
@@ -159,6 +162,7 @@ Email info@cigarshop.com <br>
 </div>
 		
 		
-		
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js%22%3E"></script>	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js%22%3E"></script>
  </body>
 </html>
