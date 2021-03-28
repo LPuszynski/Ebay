@@ -3,34 +3,59 @@
 <head>
     <meta charset="utf-8" />
     <title>Sell an object</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="sellObject.css">
     <link rel="icon" type="image/png" href="icon.png"/>
 </head>
 <body>
 
-</div id="SellObject">
-<div id="Sell_title">
- Sell an object : 
+<div id="tlois">
+	 &emsp;CIGAR SHOP SINCE 1955 
+
+</div>	
+
+
+<div id="title"> 
+	Cigar Shop
 </div>
 
+<section>
+<div class="wrapper">
+    <ul>
+	<li><a href="index.php">Home</li>
+<li> Categories
+            <ul>
+<li><a href="cigars.php">Cigars</a></li>
+<li><a href="">Accessories</li></li>
+</ul><li> <a href="sellObject.php">Sell </a></li>
+<li><a href="">Your account </a></li></ul>
+<a href="cart.php"><i class="fas fa-shopping-cart"></i></a>
+</div><br><br>
+
 <form action="" method="post">
-<div id="form_SellObject">
-<select name="Category">
-<option value="Cigars">Cigars</option>
+<div id="Register_form">
+
+<h3>SELL AN ITEM</h3>
+
+<select name="Category" class="infos">
+<option value="Cigars" >Cigars</option>
 <option value="Accessories">Accessories </option>
 </select><br>
-Name of the product : <input type="text" id="name" name="name"><br>
-Description of the product : <input type="name" id="description" name="description"><br>
-Picture of the product : <input type="file" id="product_picture" name="product_picture"> <br>
-<select name="saleType">
+
+ <input type="text" class="infos" id="name" name="name" placeholder="Name of the product :"><br>
+ <input type="name"  class="infos" id="description" name="description" placeholder="Description of the product" ><br>
+Picture of the product : <input type="file" id="product_picture" name="product_picture"placeholder="Name of the product "> <br>
+
+<select name="saleType" class="infos" >
 <option value="1">Sell it now</option>
 <option value="0">Auctions</option>
 </select><br>
-Price of the product (£): <input type="text" id="price" name="price"><br>
-</div>
- <input type="submit" name="submit" value="SUBMIT">
-</div>
-<form>
+
+<input type="text" class="infos" id="price" name="price"placeholder="Price of the product (£)"><br>
+
+ <input type = "submit" class="bouton"  value = "SUBMIT" name = "submit"/>
+
+ </div>
+<form></section>
 
 
 <br><br>
