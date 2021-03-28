@@ -72,7 +72,7 @@
 <?php
 session_start();	
 if($_SESSION['profilFound']!=0){
-	echo '&emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp; &emsp; &emsp;'.$_SESSION['firstName'].'&emsp; &emsp;'.$_SESSION['lastName'];
+	echo '&emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp; &emsp; &emsp;'.$_SESSION['firstname'].'&emsp; &emsp;'.$_SESSION['lastname'];
 }
 ?>
 <a href="cart.php"><i class="fas fa-shopping-cart"></i></a>

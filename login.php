@@ -26,8 +26,8 @@ $_SESSION['profilFound'] = 0;
 try
 {
 
-$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', '');	
-//$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
+//$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', '');	
+$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
 
 }
 catch (Exception $e)
@@ -55,10 +55,19 @@ if (isset ($_POST['submit'])){
 	foreach($users as $user):
 		if (strcmp ( $user['password'], $password) == 0){
 			$_SESSION['id']=$user['id'];
-			$_SESSION['lastName']=$user['lastname'];
-			$_SESSION['firstName']=$user['firstname'];	
-			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
+			$_SESSION['lastname']=$user['lastname'];
+			$_SESSION['firstname']=$user['firstname'];
+			$_SESSION['adress_line1']=$user['adress_line1'];
+			$_SESSION['city']=$user['city'];
+			$_SESSION['email']=$user['email'];
+			$_SESSION['password']=$user['password'];
+			$_SESSION['postal_code']=$user['postal_code'];
+			$_SESSION['fullname']=$user['fullname'];
+			$_SESSION['cardnumber']=$user['cardnumber'];	
+			$_SESSION['expiration_date']=$user['expiration_date'];
+			$_SESSION['cvc']=$user['cvc'];
 			$_SESSION['profilFound'] = 1; //He is a customer in the DB
+			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
 		}
 	endforeach;
 
@@ -71,12 +80,13 @@ if (isset ($_POST['submit'])){
 			$_SESSION['id']=$user['id'];
 			$_SESSION['lastName']=$user['lastname'];
 			$_SESSION['firstName']=$user['firstname'];	
-			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
 			$_SESSION['profilFound'] = 2; //He is a customer in the DB
+			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
 		}
 	endforeach;
 	if($_SESSION['profilFound'] == 0){    //in order to allow a visitor to have a cart
 		$_SESSION['id']=0;
+		header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
 	}
 }
 ?>

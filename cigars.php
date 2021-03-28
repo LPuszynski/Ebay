@@ -26,6 +26,7 @@ session_start();
 try
 {
     
+    $db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
     /*$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', '');*/ /* Port de thomas = 3307 / Port de Lois = 3306 */
     
     
@@ -37,26 +38,57 @@ catch (Exception $e)
 
 
 if (isset($_POST['cart'])){
+    date_default_timezone_set('Europe/Paris');
+    $date = date('y-m-d');
+    $time = date('h:i');
+
+
+
     if ($_SESSION['profilFound']==0){
-        $stmt = $db->prepare('INSERT INTO cart (idCustomer, idItem) VALUES ("0", "'.$_POST['id'].'")');
+        $stmt = $db->prepare('SELECT * FROM cart WHERE idItem="'.$_POST['id'].'" AND idCustomer="0"');
+        $stmt->execute();
+        $user = $stmt->fetch();
+        if ($user) {
+            $stmt = $db->prepare('UPDATE cart SET date = "'.$date.'" WHERE idItem="'.$_POST['id'].'" AND idCustomer="0"');
+            $stmt->execute();
+            $stmt = $db->prepare('UPDATE cart SET time = "'.$time.'" WHERE idItem="'.$_POST['id'].'" AND idCustomer="0"');
+            $stmt->execute();
+        }
+        else{
+            $stmt = $db->prepare('INSERT INTO cart (idCustomer, idItem, date, time) VALUES ("0", "'.$_POST['id'].'", "'.$date.'", "'.$time.'")');
+            $stmt->execute();      
+        }
     }
-    else{
-        $stmt = $db->prepare('INSERT INTO cart (idCustomer, idItem) VALUES ("'.$_SESSION['id'].'", "'.$_POST['id'].'")');
+        else{
+            $stmt = $db->prepare('SELECT * FROM cart WHERE idItem="'.$_POST['id'].'" AND idCustomer="'.$_SESSION['id'].'"');
+            $stmt->execute();
+            $user = $stmt->fetch();
+            if ($user) {
+                $stmt = $db->prepare('UPDATE cart SET date = "'.$date.'" WHERE idItem="'.$_POST['id'].'" AND idCustomer="'.$_SESSION['id'].'"');
+                $stmt->execute();
+                $stmt = $db->prepare('UPDATE cart SET time = "'.$time.'" WHERE idItem="'.$_POST['id'].'" AND idCustomer="'.$_SESSION['id'].'"');
+                $stmt->execute();
+            }
+            else{
+                $stmt = $db->prepare('INSERT INTO cart (idCustomer, idItem, date, time) VALUES ("'.$_SESSION['id'].'", "'.$_POST['id'].'", "'.$date.'", "'.$time.'")');
+                $stmt->execute();
+            }
     }
-    $stmt->execute();
 }
+
 
 if (isset($_POST['buyNow'])){
     if ($_SESSION['profilFound']==0){
-        $stmt = $db->prepare('INSERT INTO cart (idCustomer, idItem) VALUES ("0", "'.$_POST['id'].'")');
+        //$stmt = $db->prepare('INSERT INTO cart (idCustomer, idItem) VALUES ("0", "'.$_POST['id'].'")');
+        echo 'pas connecté';
     }
     else{
-        $stmt = $db->prepare('INSERT INTO cart (idCustomer, idItem) VALUES ("'.$_SESSION['id'].'", "'.$_POST['id'].'")');
+        $_SESSION['idItemBuyNow']=$_POST['id'];
+        header('Location: http://localhost/GitHub/Ebay/buyingConfirmation.php');
     }
-    $stmt->execute();
 }
 
-$stmt = $db->prepare('SELECT * FROM item WHERE category LIKE "%cigars%"');
+$stmt = $db->prepare('SELECT * FROM item WHERE category="cigars"');
 $stmt->execute();
 $cigar = $stmt->fetchAll();
 
@@ -92,12 +124,10 @@ foreach($cigar as $c):
             echo "<input type = 'number' placeholder='Enter your bid'>";
             echo "<button type='submit' name='submit'>Bid !</button>";
         }
-        
         echo '<div class="cart"> <button type="submit" id="cart" name="cart"> Cart </div>';
         echo '<input type="hidden" id="id" name="id" value = "'.$c['id'].'"/>';
         echo "</form>";
         
-        echo "<p class='quantity'>Quantity : ".$c['quantity']."</p>";
 
         
 

@@ -1,8 +1,9 @@
-﻿body {
+﻿
+body {
     background-color: wheat;
 }
 
-form{
+#inputForm{
     background-color:wheat;
     justify-content:left;
     width:36.15%;
@@ -40,7 +41,6 @@ input {
     display:flex;
     flex-direction:column;
     align-items:center;
-
 }
 
 #VisaMethod{
@@ -219,4 +219,78 @@ a {
             margin-left: 170px;
             top: 0;
             position: absolute;
+        }
+
+        
+        .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 50%;
+            flex-wrap: wrap;
+            flex-direction: row;
+            background-color: #fff;
+            border:thick double #825c3a;
+            margin-bottom: 10%;
+        }
+
+        .informations {
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            flex-direction:column;
+            align-items:center;
+        }
+        
+        .product {
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            flex-direction:column;
+            align-items:center;
+            border-right: 0.5mm dashed black;
+            padding-right: 6%;
+        }
+        
+        .description {
+            color: saddlebrown;
+            text-align: center;
+            padding: 10px;
+            font-family: 'Syne Mono', monospace;
+        }
+        
+        .price {
+            color: red;
+            margin-top: -10px;
+            font-size: 25px;
+            font-family: 'Syne Mono', monospace;
+        }
+        
+        
+        .totalPrice{
+            text-align:right;
+            margin-top: 1%;
+        }
+
+        #title2{
+            color: #330000;
+            font-family: Verdana;
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 1%;
+        }
+        #title3{
+            color: #330000;
+            font-family: Verdana;
+            text-align: center;
+            font-size: 20px;
+            margin-top: 7%;
+            margin-bottom: 5%;
+        }
+
+        #formConfirmation{
+            margin-right : 35%;
+            margin-top: 20%;
+        }
+        
+        #formReturnToMenu{
+            margin-bottom: 10%;
         }

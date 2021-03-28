@@ -10,7 +10,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="validateform.js"></script>
 
-<title>Create an account</title>
+<title>Enter your information</title>
 
 </head>
 
@@ -31,8 +31,8 @@
 <div class="wrapper">
     <ul>
 	<li><a href="index.php">Home</li>
-<li> Categories
-            <ul>
+<li> Categories 
+<ul>
 <li><a href="cigars.php">Cigars</a></li>
 <li><a href="">Accessories</li></li>
 </ul><li> <a href="sellObject.php">Sell </a></li>
@@ -41,6 +41,7 @@
 </div><br><br>
 
 <?php
+session_start();
 try
 {
 $db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */	
@@ -53,59 +54,69 @@ catch (Exception $e)
 
 if (isset ($_POST['submit'])){
 	
-	if (isset ($_POST['firstname']))
+	if ($_POST['firstname']!='')
     {
-        $firstname = $_POST['firstname'];
+		$stmt = $db->prepare('UPDATE customer SET firstname = "'.$_POST['firstname'].'" WHERE id="'.$_SESSION['id'].'"');
+		$stmt->execute();
 	}
-	if (isset ($_POST['mail']))
+	if ($_POST['mail']!='')
     {
-        $mail = $_POST['mail'];
+        $stmt = $db->prepare('UPDATE customer SET email = "'.$_POST['mail'].'" WHERE id="'.$_SESSION['id'].'"');
+		$stmt->execute();
 	}
-	if (isset ($_POST['lastname']))
+	if ($_POST['lastname']!='')
     {
-        $lastname = $_POST['lastname'];
+        $stmt = $db->prepare('UPDATE customer SET lastname = "'.$_POST['lastname'].'" WHERE id="'.$_SESSION['id'].'"');
+		$stmt->execute();
 	}
-	if (isset ($_POST['password']))
+	if ($_POST['password']!='')
     {	
-        $password = $_POST['password'];
+        $stmt = $db->prepare('UPDATE customer SET password = "'.$_POST['password'].'" WHERE id="'.$_SESSION['id'].'"');
+		$stmt->execute();
 	}
-	if (isset($_POST['city']))
+	if ($_POST['city']!='')
 	{
-		$city=$_POST['city'];
+		$stmt = $db->prepare('UPDATE customer SET city = "'.$_POST['city'].'" WHERE id="'.$_SESSION['id'].'"');
+		$stmt->execute();
 	}
-	if (isset($_POST['Address']))
+	if ($_POST['Address']!='')
 	{
-		$address=$_POST['Address'];
+		$stmt = $db->prepare('UPDATE customer SET adress_line1 = "'.$_POST['Address'].'" WHERE id="'.$_SESSION['id'].'"');
+		$stmt->execute();
 	}
-	if (isset($_POST['postal_code']))
+	if ($_POST['postal_code']!='')
 	{
-		$postal_code=$_POST['postal_code'];
+		$stmt = $db->prepare('UPDATE customer SET postal_code = "'.$_POST['postal_code'].'" WHERE id="'.$_SESSION['id'].'"');
+		$stmt->execute();
 	}
-	if (isset($_POST['FullName']))
+	if ($_POST['FullName']!='')
 	{
-	 $fullName=$_POST['FullName'];
+		$stmt = $db->prepare('UPDATE customer SET fullname = "'.$_POST['FullName'].'" WHERE id="'.$_SESSION['id'].'"');
+		$stmt->execute();
 	}
-	if (isset($_POST['card_number']))
+	if ($_POST['card_number']!='')
 	{
-		$card_number=$_POST['card_number'];
+		$stmt = $db->prepare('UPDATE customer SET cardnumber = "'.$_POST['card_number'].'" WHERE id="'.$_SESSION['id'].'"');
+		$stmt->execute();
 	}
-	if (isset($_POST['expiration_date']))
+	if ($_POST['expiration_date']!='')
 	{
-	 $expiration_date=$_POST['expiration_date'];
+		$stmt = $db->prepare('UPDATE customer SET expiration_date = "'.$_POST['expiration_date'].'" WHERE id="'.$_SESSION['id'].'"');
+		$stmt->execute();
 	}
-	if(isset($_POST['cvc']))
+	if($_POST['cvc']!='')
 	{
-		$cvc=$_POST['cvc'];
+		$stmt = $db->prepare('UPDATE customer SET cvc = "'.$_POST['cvc'].'" WHERE id="'.$_SESSION['id'].'"');
+		$stmt->execute();
 	}
 
+	header("Location: http://localhost/GitHub/Ebay/buyingConfirmation.php"); /* Redirection du navigateur */
 
-$records = $db->prepare('INSERT INTO customer (email, password, lastname, firstname, adress_line1, city, postal_code, fullname, cardnumber, expiration_date, cvc ) VALUES ("'.$mail.'", "'.$password.'", "'.$lastname.'", "'.$firstname.'", "'.$address.'", "'.$city.'", "'.$postal_code.'", "'.$fullName.'", "'.$card_number.'", "'.$expiration_date.'", "'.$cvc.'")');
-$records->execute();
 }
 ?>
+<h3>Enter informations that you want to modify</h3>
 
-
-<form name = "inputForm" action = "" method = "post" id = "inputForm">
+<form name = "inputForm" action = "" method = "post">
 	<div id="Register_form">
 	<br>	
 	<h3>PERSONAL INFORMATIONS</h3>
@@ -131,7 +142,7 @@ $records->execute();
 		</div>
 		
 			<br> 
-			<input type = "submit" class="bouton"  value = "SUBMIT" name = "submit"/>
+			<input type = "submit" class="bouton"  value = "Order" name = "submit"/>
 			
 			
 
