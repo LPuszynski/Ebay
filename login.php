@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <link rel="icon" type="image/png" href="icon.png"/>
-<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="login.css">
 
 
 	
@@ -19,6 +19,29 @@
 
 <body>
 
+<div id="tlois">
+	 &emsp;CIGAR SHOP SINCE 1955 
+
+</div>	
+
+
+<div id="title"> 
+	Cigar Shop
+</div>
+
+<section>
+<div class="wrapper">
+    <ul>
+	<li><a href="index.php">Home</li>
+<li> Categories
+            <ul>
+<li><a href="cigars.php">Cigars</a></li>
+<li><a href="">Accessories</li></li>
+</ul><li> <a href="sellObject.php">Sell </a></li>
+<li><a href="">Your account </a></li></ul>
+<a href="cart.php"><i class="fas fa-shopping-cart"></i></a>
+</div><br><br>
+
 <?php
 session_start();
 $_SESSION['profilFound'] = 0;
@@ -27,7 +50,7 @@ try
 {
 
 //$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', '');	
-$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
+$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
 
 }
 catch (Exception $e)
@@ -92,26 +115,49 @@ if (isset ($_POST['submit'])){
 ?>
 
 
-<form name = "inputForm" action = "" method = "post">
-		<legend>PERSONAL INFORMATIONS</legend>
-			<table border="1">
-			<tr>
-			<td>Mail :</td>
-				<td><input type="text" id="mail" name="mail"> </td>
 
-				
-			<td>Password:</td>
+		
+		
+		
+		
+<form name = "inputForm" action = "" method = "post">
+	<div id="Register_form">
+	<br>	
+	<h3>PERSONAL  INFORMATIONS</h3>
 			
-			<td>	<input type="password" id="password" name="password"> </td>	
-	</tr>
-    </table>
-	<br> <br><br> <br><br> <br>
-			<input type = "submit"  value = "submit" name = "submit"/>
-</form>
+				 
+				<input type="text" class="infos" id="mail" name="mail" placeholder="Mail"> <br>
+				
+
+				<input type="password" class="infos" id="password" name="password" placeholder="Password"> <br>
+				
 		
+			<br> 
+			<input type = "submit" class="bouton"  value = "LOG IN" name = "submit"/>
+			
+			
+
+	</div>
+
+</form></section>
 		
-		
-			<button onclick="reset()">Reset</button>
+					
+<div id="bottom"> 
+ <br>CONTACT<br><br>
+ Opus Management S.A.<br>
+Impasse de Champ Colin N°6<br>
+1260 Nyon - Suisse <br>
+Hotline +41 (0)79 104 19 98<br>
+Email info@cigarshop.com <br>
+<br>
+<span id="social"> <img src="socialnetwork.png"></span>
+
+</div>
+
+<div id="credits"> 
+<div id="copyright">Copyright 2021 © Cigar Shop - Opus Management S.A.</div>
+<span id="payments"> <img src="payments.png"></span>
+</div>
 		
 		
 		
