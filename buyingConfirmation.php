@@ -106,7 +106,8 @@
     if (isset ($_POST['confirm'])){
         header("Location: http://localhost/GitHub/Ebay/buyingBDD.php"); /* Redirection du navigateur */
     }
-        
+    $numberCardend = substr($_SESSION['cardnumber'],4,strlen($_SESSION['cardnumber']));
+    $numberStartCardNumber = substr($_SESSION['cardnumber'],0,4);
 ?>
     <div class='informations'>
         First Name : <?php echo $_SESSION['firstname'];?><br>
@@ -115,10 +116,11 @@
         Adress : <?php echo $_SESSION['adress_line1'];?><br>
         City : <?php echo $_SESSION['city'];?><br>
         Postal Code : <?php echo $_SESSION['postal_code'];?><br>
-        Card Number : <?php echo $_SESSION['cardnumber'];?><br>
-        Expiration Date : <?php echo $_SESSION['expiration_date'];?><br>
-        CVC : <?php echo $_SESSION['cvc'];?><br>
-        <form action = '' method = 'POST' id = 'formConfirmation' >
+        Card Name : <?php echo $_SESSION['fullname'];?><br>
+        Card Number : <?php echo $numberStartCardNumber,str_repeat('*',strlen($numberCardend));?><br>
+        Expiration Date : <?php echo str_repeat('*',strlen($_SESSION['expiration_date']));?><br>
+        CVC : <?php echo str_repeat('*',strlen($_SESSION['cvc']));?><br>
+        <form action = '' method = 'POST' id = 'formConfirmation'>
         <button type='submit' name='confirm' value='submit'> Confirm </button>
         <button type='submit' name='change' value='submit'> Change informations </button>
         </form>

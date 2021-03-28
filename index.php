@@ -8,7 +8,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="index.js"></script>
 <title>Cigar shop</title>
-    
 
 
 
@@ -33,10 +32,21 @@
 
 <div id="tlois">
 	 &emsp;CIGAR SHOP SINCE 1955 &emsp; &emsp; &emsp;&emsp; &emsp;&emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; 
-	 <a href="register.php">REGISTER</a> &emsp; &emsp;
-	 <a href="sellerRegister.php">BECOME A SELLER</a>
-	 &emsp; &emsp; &emsp;&emsp; &emsp;  &emsp; &emsp; &emsp;&emsp;&emsp;&emsp; &emsp; &emsp;&emsp; &emsp;
-	 <a href="login.php">LOGIN</a>  &emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;
+	 <?php
+	 session_start();
+	 if($_SESSION['profilFound']==0){
+		 echo '<a href="register.php">REGISTER</a> &emsp; &emsp;';
+	 }
+	 if($_SESSION['profilFound']!=2){
+		echo '<a href="sellerRegister.php">BECOME A SELLER</a>&emsp; &emsp; &emsp;&emsp; &emsp;  &emsp; &emsp; &emsp;&emsp;&emsp;&emsp; &emsp; &emsp;&emsp; &emsp;';
+	}
+	if($_SESSION['profilFound']==0){
+		echo '	 <a href="login.php">LOGIN</a>  &emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;';
+	}
+	if($_SESSION['profilFound']!=0){
+		echo '	 <a href="signOut.php" >SIGN OUT</a>  &emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;';
+	}
+	?>
 	<a href="" class="admin" > <i class="fas fa-user-cog"></i> </a>
 </div>	
 
@@ -66,13 +76,16 @@
 <li> Categories
             <ul>
 <li><a href="cigars.php">Cigars</a></li>
-<li><a href="">Accessories</li></li>
-</ul><li> <a href="sellObject.php">Sell </a></li>
+<li><a href="">Accessories</li></li></ul>
+<?php
+	if($_SESSION['profilFound']==2){
+		echo '<li> <a href="sellObject.php">Sell </a></li>';
+	}
+?>
 <li><a href="yourAccount">Your account </a></li></ul>
 <?php
-session_start();	
 if($_SESSION['profilFound']!=0){
-	echo '&emsp; &emsp;&emsp;&emsp;&emsp; &emsp;&emsp; &emsp; &emsp;'.$_SESSION['firstname'].'&emsp; &emsp;'.$_SESSION['lastname'];
+	echo '<div id="personnalInfo">'.$_SESSION['firstname'].'&emsp; &emsp;'.$_SESSION['lastname'].'</div>';
 }
 ?>
 <a href="cart.php"><i class="fas fa-shopping-cart"></i></a>

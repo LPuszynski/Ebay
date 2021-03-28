@@ -23,16 +23,51 @@ session_start();
             die('Erreur : ' . $e->getMessage());
     }
 
+    date_default_timezone_set('Europe/Paris');
+    $day = date('d');
+    $date = date('y-m-d');
+    $time = date('H:i:00');
+
+    if (isset($_POST['buyNow'])){
+        if ($_SESSION['profilFound']!=1){
+            header('Location: http://localhost/GitHub/Ebay/login.php');
+        }
+        else{
+            $_SESSION['idItemBuyNow']=$_POST['id'];
+            header('Location: http://localhost/GitHub/Ebay/buyingConfirmation.php');
+        }
+    }
+
         $stmt = $db->prepare('SELECT * FROM cart WHERE idCustomer="'.$_SESSION['id'].'"');
         $stmt->execute();
         $items = $stmt->fetchAll();
 
+
+
         echo "<h1>Your Shopping Cart</h1>";
 
         echo "<div class='content'>";
+        
+        foreach($items as $item):
+        $dayItem = substr($item['date'],8,2);
 
+        $differenceTime = strtotime($time)-strtotime($item['time']);
+        if($dayItem != $day){
+            $records = $db->prepare('DELETE FROM cart WHERE id="'.$item['id'].'"');
+            $records->execute();
+        }
+        if($differenceTime >= 3600){
+            $records = $db->prepare('DELETE FROM cart WHERE id="'.$item['id'].'"');
+            $records->execute();
+        }
+    endforeach;
+
+    $stmt = $db->prepare('SELECT * FROM cart WHERE idCustomer="'.$_SESSION['id'].'"');
+        $stmt->execute();
+        $items = $stmt->fetchAll();
 
         foreach($items as $item):
+
         $stmt2 = $db->prepare('SELECT * FROM item WHERE id="'.$item['idItem'].'"');
         $stmt2->execute();
         $cigars = $stmt2->fetchAll();
@@ -52,11 +87,11 @@ session_start();
             echo "<p class='description'>".$c['description']."</p>";
             echo "<p class='price'>Price : £".$c['price']."</p>";
 
-            echo "<form name = '' action = '' method = ''>";
+            echo "<form action = '' method = 'POST'>";
             if ($c['BuyNow']==1) 
             {
             echo "<div class='BuyNow'>";
-            echo "<button type='submit' class='BuyItNow' name='submit'>Buy it now !</button>"; 
+            echo "<button type='submit' class='BuyItNow' name='buyNow'>Buy it now !</button>"; 
             echo "<input type = 'number' placeholder='Your best offer'>";
             echo "<button type='submit' name='submit'>Place offer!</button>";
             echo "</div>";
@@ -65,6 +100,7 @@ session_start();
                 echo "<input type = 'number' placeholder='Enter your bid'>";
                 echo "<button type='submit' name='submit'>Bid !</button>";
             }
+            echo '<input type="hidden" id="id" name="id" value = "'.$c['id'].'"/>';
 
             echo "</form>";
 

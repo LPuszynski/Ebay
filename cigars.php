@@ -40,7 +40,7 @@ catch (Exception $e)
 if (isset($_POST['cart'])){
     date_default_timezone_set('Europe/Paris');
     $date = date('y-m-d');
-    $time = date('h:i');
+    $time = date('H:i');
 
 
 
@@ -78,9 +78,8 @@ if (isset($_POST['cart'])){
 
 
 if (isset($_POST['buyNow'])){
-    if ($_SESSION['profilFound']==0){
-        //$stmt = $db->prepare('INSERT INTO cart (idCustomer, idItem) VALUES ("0", "'.$_POST['id'].'")');
-        echo 'pas connecté';
+    if ($_SESSION['profilFound']!=1){
+        header('Location: http://localhost/GitHub/Ebay/login.php');
     }
     else{
         $_SESSION['idItemBuyNow']=$_POST['id'];

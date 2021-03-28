@@ -78,9 +78,9 @@ if (isset ($_POST['submit'])){
 	foreach($users as $user):
 		if (strcmp ( $user['password'], $password) == 0){
 			$_SESSION['id']=$user['id'];
-			$_SESSION['lastName']=$user['lastname'];
-			$_SESSION['firstName']=$user['firstname'];	
-			$_SESSION['profilFound'] = 2; //He is a customer in the DB
+			$_SESSION['lastname']=$user['lastname'];
+			$_SESSION['firstname']=$user['firstname'];	
+			$_SESSION['profilFound'] = 2; //He is a seller in the DB
 			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
 		}
 	endforeach;
