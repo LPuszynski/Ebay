@@ -50,7 +50,7 @@ try
 {
 
 //$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', '');	
-$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
+$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
 
 }
 catch (Exception $e)
@@ -145,7 +145,7 @@ if (isset ($_POST['submit'])){
 <div id="bottom"> 
  <br>CONTACT<br><br>
  Opus Management S.A.<br>
-Impasse de Champ Colin N°6<br>
+Impasse de Champ Colin Nï¿½6<br>
 1260 Nyon - Suisse <br>
 Hotline +41 (0)79 104 19 98<br>
 Email info@cigarshop.com <br>
@@ -155,7 +155,7 @@ Email info@cigarshop.com <br>
 </div>
 
 <div id="credits"> 
-<div id="copyright">Copyright 2021 © Cigar Shop - Opus Management S.A.</div>
+<div id="copyright">Copyright 2021 ï¿½ Cigar Shop - Opus Management S.A.</div>
 <span id="payments"> <img src="payments.png"></span>
 </div>
 		

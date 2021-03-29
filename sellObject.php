@@ -95,9 +95,26 @@ Email info@cigarshop.com <br>
             $description = $_POST['description'];
             $price = $_POST['price']; 
             $buyItNow = $_POST['saleType'];
-
+            
             $records = $db->prepare('INSERT INTO item (name, photos, description, price, category, BuyNow, idseller) VALUES ("'.$name.'", "'.$picture.'", "'.$description.'", "'.$price.'", "'.$category.'","'.$buyItNow.'", "'.$_SESSION['id'].'")');
             $records->execute();
+
+            /*if ($buyItNow == 4){      //if the type of the sell is by Auction
+                $stmt = $db->prepare('SELECT * FROM item WHERE idseller="'.$_SESSION['id'].'"');
+                $stmt->execute();
+                $items = $stmt->fetchAll();
+
+
+                $array = array();
+                foreach($items as $item):
+                    $array[] = $item['id'];
+                endforeach;
+                echo end($array);  // id of the object that the seller just enter
+
+                $records = $db->prepare('INSERT INTO auctions (id_seller, price1, id_item, price, category, BuyNow, idseller) VALUES ("'.$_SESSION['id'].'", "'.$_POST['price'].'", "'.end($array).'", "'.$price.'", "'.$category.'","'.$buyItNow.'", "'.$_SESSION['id'].'")');
+                $records->execute();
+
+            }*/
 
              /*echo ' Category :' .$category. '/ name :' .$name. '/ photo: '.$picture.' / Description: '.$description.'/ Price: '.$price;*/
 

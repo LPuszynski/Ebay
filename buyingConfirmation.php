@@ -121,8 +121,8 @@
         Expiration Date : <?php echo str_repeat('*',strlen($_SESSION['expiration_date']));?><br>
         CVC : <?php echo str_repeat('*',strlen($_SESSION['cvc']));?><br>
         <form action = '' method = 'POST' id = 'formConfirmation'>
-        <button type='submit' name='confirm' value='submit'> Confirm </button>
-        <button type='submit' name='change' value='submit'> Change informations </button>
+        <button type='submit' name='confirm' value='submit' class='buttonBuyNow'> Confirm </button>
+        <button type='submit' name='change' value='submit' class='buttonBuyNow'> Change informations </button>
         </form>
         </div>
         </div>

@@ -34,6 +34,10 @@
 	 &emsp;CIGAR SHOP SINCE 1955 &emsp; &emsp; &emsp;&emsp; &emsp;&emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; 
 	 <?php
 	 session_start();
+	 if (isset($_SESSION['profilFound'])==0){ //if the variable that indicate the type of the user isnt declared
+		$_SESSION['profilFound']=0;  // the user is considered as a visitor
+	 }
+
 	 if($_SESSION['profilFound']==0){
 		 echo '<a href="register.php">REGISTER</a> &emsp; &emsp;';
 	 }

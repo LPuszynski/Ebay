@@ -87,6 +87,74 @@ if (isset($_POST['buyNow'])){
     }
 }
 
+if (isset($_POST['bid'])){
+    date_default_timezone_set('Europe/Paris');
+    $date = date('y-m-d');
+    $time = date('H:i');
+    if ($_SESSION['profilFound']!=1){
+        header('Location: http://localhost/GitHub/Ebay/login.php');
+    }
+    else{
+        if ($_POST['bidAmout']!='' && $_POST['bidAmout']!='0'){
+            
+            $stmt = $db->prepare('SELECT * FROM auctions WHERE id_item="'.$_POST['id'].'"');
+                $stmt->execute();
+                $items = $stmt->fetchAll();
+
+                foreach($items as $item):
+                    $price1 = $item['price1'];
+                    $price2 = $item['price2'];
+                    $timeEnd = $item['timeEnd'];
+                    $dateEnd = $item['dateEnd'];
+                    $timeStart = $item['timeStart'];
+                    $dateStart = $item['dateStart'];
+                endforeach;
+                //$differenceTime = strtotime($time)-strtotime($item['time']);
+
+                if ((strtotime($date)-strtotime($dateEnd)==0 && strtotime($time)<strtotime($timeEnd)) || (strtotime($date)>=strtotime($dateStart) && strtotime($date)<strtotime($dateEnd))){ //we check if its still on time
+                    if ($_POST['bidAmout'] <= $price1){
+                        echo 'rentrez une valeure plus grande que le prix affiché';
+                    }
+
+                    elseif ($_POST['bidAmout'] > $price1){
+                        if ($price2 == NULL){
+                            $stmt = $db->prepare('UPDATE auctions SET price2 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
+                            $stmt->execute();
+                            $stmt = $db->prepare('UPDATE auctions SET price1 = "'.($price1+1).'" WHERE id_item="'.$_POST['id'].'"');
+                            $stmt->execute();
+                            $stmt = $db->prepare('UPDATE auctions SET id_buyer = "'.$_SESSION['id'].'" WHERE id_item="'.$_POST['id'].'"');
+                            $stmt->execute();
+                        }
+                        elseif ($_POST['bidAmout'] > $price2){
+                            $stmt = $db->prepare('UPDATE auctions SET price2 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
+                            $stmt->execute();
+                            $stmt = $db->prepare('UPDATE auctions SET price1 = "'.($price2+1).'" WHERE id_item="'.$_POST['id'].'"');
+                            $stmt->execute();
+                            $stmt = $db->prepare('UPDATE auctions SET id_buyer = "'.$_SESSION['id'].'" WHERE id_item="'.$_POST['id'].'"');
+                            $stmt->execute();
+                        }
+                        elseif ($_POST['bidAmout'] == $price2){
+                            $stmt = $db->prepare('UPDATE auctions SET price1 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
+                            $stmt->execute();
+                        }
+                        elseif ($_POST['bidAmout'] < $price2){
+                            $stmt = $db->prepare('UPDATE auctions SET price1 = "'.($_POST['bidAmout']+1).'" WHERE id_item="'.$_POST['id'].'"');
+                            $stmt->execute();
+                        }
+                    }
+                }
+
+            /*$_SESSION['idItemBid']=$_POST['id'];
+            $_SESSION['id']
+            $date
+            $time
+            $stmt = $db->prepare('UPDATE auctions SET date = "'.$date.'" WHERE idItem="'.$_POST['id'].'" AND idCustomer="'.$_SESSION['id'].'"');
+
+            $stmt->execute();*/
+        }
+    }
+}
+
 $stmt = $db->prepare('SELECT * FROM item WHERE category="cigars"');
 $stmt->execute();
 $cigar = $stmt->fetchAll();
@@ -101,7 +169,6 @@ foreach($cigar as $c):
     
      echo "<h3>".$c['name']."</h3>";
      
-     //echo "<img src=Cigars_pictures/".$c['photos']." width='150px' >";
      
      echo $c['photos'] = substr($c['photos'],36); // thomas enleve cette ligne si pour toi ça bug
      echo "<img src=Cigars_pictures/".$c['photos']." width='150px' >";
@@ -111,21 +178,23 @@ foreach($cigar as $c):
      echo "<p class='price'>Price : £".$c['price']."</p>";
      
      echo "<form action = '' method = 'POST'>";
-     if ($c['BuyNow']==1) 
-     {
+
+     if ($c['BuyNow']==1) {
          echo "<div class='BuyNow'>";
          echo "<button type='submit' class='BuyItNow' name='buyNow'>Buy it now !</button>"; 
          echo "<input type = 'number' placeholder='Your best offer'>";
          echo "<button type='submit' name='submit'>Place offer!</button>";
          echo "</div>";
         }
-        else{
-            echo "<input type = 'number' placeholder='Enter your bid'>";
-            echo "<button type='submit' name='submit'>Bid !</button>";
-        }
-        echo '<div class="cart"> <button type="submit" id="cart" name="cart"> Cart </div>';
-        echo '<input type="hidden" id="id" name="id" value = "'.$c['id'].'"/>';
-        echo "</form>";
+
+    if ($c['auctions']==1){
+        echo "<input type = 'number' name='bidAmout' placeholder='Enter your bid'>";
+        echo "<button type='submit' name='bid'>Bid !</button>";
+    }
+
+    echo '<div class="cart"> <button type="submit" id="cart" name="cart"> Cart </div>';
+    echo '<input type="hidden" id="id" name="id" value = "'.$c['id'].'"/>';
+    echo "</form>";
         
 
         

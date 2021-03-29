@@ -226,7 +226,7 @@ a {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 50%;
+            width: 75%;
             flex-wrap: wrap;
             flex-direction: row;
             background-color: #fff;
@@ -240,6 +240,7 @@ a {
             flex-direction:column;
             align-items:center;
             margin-top: 6%;
+            margin-right: 6%;
         }
         
         .product {
@@ -293,5 +294,9 @@ a {
         }
         
         #formReturnToMenu{
+            margin-bottom: 10%;
+        }
+
+        .buttonBuyNow{
             margin-bottom: 10%;
         }
