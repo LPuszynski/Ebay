@@ -48,7 +48,16 @@ Picture of the product : <input type="file" id="product_picture" name="product_p
 <select name="saleType" class="infos" >
 <option value="1">Sell it now</option>
 <option value="0">Auctions</option>
+<option value="2">Best Offer</option>
+<option value="3">Sell it now and Best Offer</option>
 </select><br>
+
+
+    
+     <input type="text" class="infos" id="startDate" name="startDate" placeholder="Beggining of the auctions : (YEAR/MONTH/DAY)"><br>
+     <input type="text" class="infos" id="endDate" name="endDate"placeholder="End of the auctions : (YEAR/MONTH/DAY)"><br>
+   
+            
 
 <input type="text" class="infos" id="price" name="price"placeholder="Price of the product (£)"><br>
 
@@ -78,7 +87,7 @@ Email info@cigarshop.com <br>
 
 
 <?php
-    session_start();
+
     try
     {
     	$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
@@ -94,13 +103,15 @@ Email info@cigarshop.com <br>
             $picture=$_POST['product_picture']; 
             $description = $_POST['description'];
             $price = $_POST['price']; 
-            $buyItNow = $_POST['saleType'];
+            $buyItNow=$_POST['saleType'];
 
-            $records = $db->prepare('INSERT INTO item (name, photos, description, price, category, BuyNow, idseller) VALUES ("'.$name.'", "'.$picture.'", "'.$description.'", "'.$price.'", "'.$category.'","'.$buyItNow.'", "'.$_SESSION['id'].'")');
+
+            $records = $db->prepare('INSERT INTO item (name, photos, description, price, category, BuyNow) VALUES ("'.$name.'", "'.$picture.'", "'.$description.'", "'.$price.'", "'.$category.'","'.$buyItNow.'")');
             $records->execute();
 
              /*echo ' Category :' .$category. '/ name :' .$name. '/ photo: '.$picture.' / Description: '.$description.'/ Price: '.$price;*/
-
+              $startdate =$_POST['startDate'];
+              $endDate = $_POST['endDate'];
         }
     ?>
 </body>
