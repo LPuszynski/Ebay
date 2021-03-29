@@ -44,7 +44,7 @@
  <input type="text" class="infos" id="name" name="name" placeholder="Name of the product :"><br>
  <input type="name"  class="infos" id="description" name="description" placeholder="Description of the product" ><br>
 Picture of the product : <input type="file" id="product_picture" name="product_picture"placeholder="Name of the product "> <br>
-
+<input type="text" class="infos" id="price" name="price"placeholder="Price of the product (£)"><br>
 <select name="saleType" class="infos" >
 <option value="1">Sell it now</option>
 <option value="0">Auctions</option>
@@ -55,11 +55,12 @@ Picture of the product : <input type="file" id="product_picture" name="product_p
 
     
      <input type="text" class="infos" id="startDate" name="startDate" placeholder="Beggining of the auctions : (YEAR/MONTH/DAY)"><br>
+    <input type="text" class="infos" id="startTime" name="startTime"placeholder="Time of the begining : (H/MIN/S)"><br>
      <input type="text" class="infos" id="endDate" name="endDate"placeholder="End of the auctions : (YEAR/MONTH/DAY)"><br>
+    <input type="text" class="infos" id="endTime" name="endTime"placeholder="Time of the end : (H/MIN/S)"><br>
    
             
 
-<input type="text" class="infos" id="price" name="price"placeholder="Price of the product (£)"><br>
 
  <input type = "submit" class="bouton"  value = "SUBMIT" name = "submit"/>
 
@@ -112,6 +113,8 @@ Email info@cigarshop.com <br>
              /*echo ' Category :' .$category. '/ name :' .$name. '/ photo: '.$picture.' / Description: '.$description.'/ Price: '.$price;*/
               $startdate =$_POST['startDate'];
               $endDate = $_POST['endDate'];
+              $startTime =$_POST['startTime'];
+              $endTime = $_POST['endTime'];
         }
     ?>
 </body>
