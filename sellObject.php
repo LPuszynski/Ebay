@@ -5,9 +5,22 @@
     <title>Sell an object</title>
     <link rel="stylesheet" href="sellObject.css">
     <link rel="icon" type="image/png" href="icon.png"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+
 </head>
 <body>
+<script>
+    function showAuctions(){
+    document.getElementById('AAA').style.display="block";
+    
+    }
+    function hideAuctions(){
+    document.getElementById('AAA').style.display="none";
+    
+    }
 
+    </script>
 <div id="tlois">
 	 &emsp;CIGAR SHOP SINCE 1955 
 
@@ -45,20 +58,30 @@
  <input type="name"  class="infos" id="description" name="description" placeholder="Description of the product" ><br>
 Picture of the product : <input type="file" id="product_picture" name="product_picture"placeholder="Name of the product "> <br>
 <input type="text" class="infos" id="price" name="price"placeholder="Price of the product (£)"><br>
+
+<!--
 <select name="saleType" class="infos" >
-<option value="1">Sell it now</option>
-<option value="0">Auctions</option>
-<option value="2">Best Offer</option>
-<option value="3">Sell it now and Best Offer</option>
-</select><br>
+<option value="1" id='Sell'>Sell it now</option>
+<option value="0" id='Auctions' onclick='showAuctions()'>Auctions</option>
+<option value="2" id='Best_offers'>Best Offer</option>
+<option value="3" id='sell&Offer'>Sell it now and Best Offer</option>
+</select><br>-->
 
+<input type="radio" name="saleType" id="Sell" onclick="hideAuctions()" value="1">
+<label for="saletype">Sell it now</label>
+<input type="radio" name="saleType" id="Auctions" onclick="showAuctions()" value="0">
+<label for="saletype">Auctions</label>
+<input type="radio" name="saleType" id="Best_offers" onclick="hideAuctions()" value="2">
+<label for="saletype">Best offers</label>
+<input type="radio" name="saleType" id="sell&Offer" onclick="hideAuctions()" value="3">
+<label for="saletype">Sell it now and Best Offers</label>
 
-    
+    <div id='AAA'>
      <input type="text" class="infos" id="startDate" name="startDate" placeholder="Beggining of the auctions : (YEAR/MONTH/DAY)"><br>
     <input type="text" class="infos" id="startTime" name="startTime"placeholder="Time of the begining : (H/MIN/S)"><br>
      <input type="text" class="infos" id="endDate" name="endDate"placeholder="End of the auctions : (YEAR/MONTH/DAY)"><br>
     <input type="text" class="infos" id="endTime" name="endTime"placeholder="Time of the end : (H/MIN/S)"><br>
-   
+   </div>
             
 
 
@@ -117,5 +140,8 @@ Email info@cigarshop.com <br>
               $endTime = $_POST['endTime'];
         }
     ?>
+
+       
+
 </body>
 </html>
