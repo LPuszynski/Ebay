@@ -108,7 +108,7 @@ Email info@cigarshop.com <br>
             $records = $db->prepare('INSERT INTO item (name, photos, description, price, category, BuyNow, idseller) VALUES ("'.$name.'", "'.$picture.'", "'.$description.'", "'.$price.'", "'.$category.'","'.$buyItNow.'", "'.$_SESSION['id'].'")');
             $records->execute();
 
-            /*if ($buyItNow == 4){      //if the type of the sell is by Auction
+            /*if ($buyItNow == 0){      //if the type of the sell is by Auction
                 $stmt = $db->prepare('SELECT * FROM item WHERE idseller="'.$_SESSION['id'].'"');
                 $stmt->execute();
                 $items = $stmt->fetchAll();

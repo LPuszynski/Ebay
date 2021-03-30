@@ -49,17 +49,36 @@ session_start();
         echo "<div class='content'>";
         
         foreach($items as $item):
-        $dayItem = substr($item['date'],8,2);
+            if ($item['auction']==NULL){
+                $dayItem = substr($item['date'],8,2);
 
-        $differenceTime = strtotime($time)-strtotime($item['time']);
-        if($dayItem != $day){
-            $records = $db->prepare('DELETE FROM cart WHERE id="'.$item['id'].'"');
-            $records->execute();
-        }
-        if($differenceTime >= 3600){
-            $records = $db->prepare('DELETE FROM cart WHERE id="'.$item['id'].'"');
-            $records->execute();
-        }
+                $differenceTime = strtotime($time)-strtotime($item['time']);
+                if($dayItem != $day){
+                    $records = $db->prepare('DELETE FROM cart WHERE id="'.$item['id'].'"');
+                    $records->execute();
+                }
+                if($differenceTime >= 3600){
+                    $records = $db->prepare('DELETE FROM cart WHERE id="'.$item['id'].'"');
+                    $records->execute();
+                }
+            }
+
+            elseif ($item['auction']==1){
+                $stmt2 = $db->prepare('SELECT * FROM auctions WHERE id_item="'.$item['idItem'].'"');
+                $stmt2->execute();
+                $auctions = $stmt2->fetchAll();
+                foreach($auctions as $auc):
+                    $timeEnd = $auc['timeEnd'];
+                    $dateEnd = $auc['dateEnd'];
+                    if ((strtotime($date)-strtotime($dateEnd)==0 && strtotime($time)<strtotime($timeEnd)) || (strtotime($date)<strtotime($dateEnd))){ //we check if its still on time
+                    }
+                    else{
+                        $records = $db->prepare('DELETE FROM cart WHERE id="'.$item['id'].'"');
+                        $records->execute();
+                    }   
+                endforeach;
+
+            }
     endforeach;
 
     $stmt = $db->prepare('SELECT * FROM cart WHERE idCustomer="'.$_SESSION['id'].'"');

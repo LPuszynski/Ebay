@@ -96,19 +96,18 @@ if (isset($_POST['bid'])){
     }
     else{
         if ($_POST['bidAmout']!='' && $_POST['bidAmout']!='0'){
-            
             $stmt = $db->prepare('SELECT * FROM auctions WHERE id_item="'.$_POST['id'].'"');
-                $stmt->execute();
-                $items = $stmt->fetchAll();
-
-                foreach($items as $item):
-                    $price1 = $item['price1'];
-                    $price2 = $item['price2'];
-                    $timeEnd = $item['timeEnd'];
-                    $dateEnd = $item['dateEnd'];
-                    $timeStart = $item['timeStart'];
-                    $dateStart = $item['dateStart'];
-                endforeach;
+            $stmt->execute();
+            $items = $stmt->fetchAll();
+            
+            foreach($items as $item):
+                $price1 = $item['price1'];
+                $price2 = $item['price2'];
+                $timeEnd = $item['timeEnd'];
+                $dateEnd = $item['dateEnd'];
+                $timeStart = $item['timeStart'];
+                $dateStart = $item['dateStart'];
+            endforeach;
                 //$differenceTime = strtotime($time)-strtotime($item['time']);
 
                 if ((strtotime($date)-strtotime($dateEnd)==0 && strtotime($time)<strtotime($timeEnd)) || (strtotime($date)>=strtotime($dateStart) && strtotime($date)<strtotime($dateEnd))){ //we check if its still on time
@@ -117,6 +116,15 @@ if (isset($_POST['bid'])){
                     }
 
                     elseif ($_POST['bidAmout'] > $price1){
+
+                        $stmt = $db->prepare('SELECT * FROM cart WHERE idItem="'.$_POST['id'].'" AND idCustomer="'.$_SESSION['id'].'"');
+                        $stmt->execute();
+                        $user = $stmt->fetch();
+                        if ($user==NULL) {
+                            $stmt = $db->prepare('INSERT INTO cart (idCustomer, idItem, date, time, auction) VALUES ("'.$_SESSION['id'].'", "'.$_POST['id'].'", "'.$date.'", "'.$time.'","1")');
+                            $stmt->execute();
+                        }
+
                         if ($price2 == NULL){
                             $stmt = $db->prepare('UPDATE auctions SET price2 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
                             $stmt->execute();
