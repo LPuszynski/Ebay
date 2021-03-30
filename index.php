@@ -92,6 +92,7 @@ if($_SESSION['profilFound']!=0){
 	echo '<div id="personnalInfo">'.$_SESSION['firstname'].'&emsp; &emsp;'.$_SESSION['lastname'].'</div>';
 }
 ?>
+<a href="message.php" id="message"><img src="message.png" width="50px"></i></a>
 <a href="cart.php"><i class="fas fa-shopping-cart"></i></a>
 </div>
 
