@@ -77,10 +77,10 @@ Picture of the product : <input type="file" id="product_picture" name="product_p
 <label for="saletype">Sell it now and Best Offers</label>
 
     <div id='AAA'>
-     <input type="text" class="infos" id="startDate" name="startDate" placeholder="Beggining of the auctions : (YEAR/MONTH/DAY)"><br>
-    <input type="text" class="infos" id="startTime" name="startTime"placeholder="Time of the begining : (H/MIN/S)"><br>
-     <input type="text" class="infos" id="endDate" name="endDate"placeholder="End of the auctions : (YEAR/MONTH/DAY)"><br>
-    <input type="text" class="infos" id="endTime" name="endTime"placeholder="Time of the end : (H/MIN/S)"><br>
+     <input type="text" class="infos" id="startDate" name="startDate" placeholder="Beginning : (YEAR/MONTH/DAY)"><br>
+    <input type="text" class="infos" id="startTime" name="startTime"placeholder="Beginning : (H/MIN/S)"><br>
+     <input type="text" class="infos" id="endDate" name="endDate"placeholder="End : (YEAR/MONTH/DAY)"><br>
+    <input type="text" class="infos" id="endTime" name="endTime"placeholder="End : (H/MIN/S)"><br>
    </div>
             
 
@@ -112,6 +112,8 @@ Email info@cigarshop.com <br>
 
 <?php
 
+    session_start();
+
     try
     {
     	$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
@@ -128,11 +130,14 @@ Email info@cigarshop.com <br>
             $description = $_POST['description'];
             $price = $_POST['price']; 
             $buyItNow = $_POST['saleType'];
-            
+            $timeStart = $_POST['startTime'];
+            $timeEnd = $_POST['endTime'];
+            $dateStart = $_POST['startDate'];
+            $dateEnd = $_POST['endDate'];
             $records = $db->prepare('INSERT INTO item (name, photos, description, price, category, BuyNow, idseller) VALUES ("'.$name.'", "'.$picture.'", "'.$description.'", "'.$price.'", "'.$category.'","'.$buyItNow.'", "'.$_SESSION['id'].'")');
             $records->execute();
 
-            /*if ($buyItNow == 0){      //if the type of the sell is by Auction
+            if ($buyItNow == 0){      //if the type of the sell is by Auction
                 $stmt = $db->prepare('SELECT * FROM item WHERE idseller="'.$_SESSION['id'].'"');
                 $stmt->execute();
                 $items = $stmt->fetchAll();
@@ -144,16 +149,28 @@ Email info@cigarshop.com <br>
                 endforeach;
                 echo end($array);  // id of the object that the seller just enter
 
-                $records = $db->prepare('INSERT INTO auctions (id_seller, price1, id_item, price, category, BuyNow, idseller) VALUES ("'.$_SESSION['id'].'", "'.$_POST['price'].'", "'.end($array).'", "'.$price.'", "'.$category.'","'.$buyItNow.'", "'.$_SESSION['id'].'")');
+                $records = $db->prepare('INSERT INTO auctions (id_seller, price1, id_item, timeStart, timeEnd, dateStart, dateEnd) VALUES ("'.$_SESSION['id'].'", "'.$_POST['price'].'", "'.end($array).'", "'.$timeStart.'", "'.$timeEnd.'","'.$dateStart.'", "'.$dateEnd.'")');
+                $records->execute();
+
+            }
+
+            /*if ($buyItNow == 2 || $buyItNow == 3){      //if the type of the sell is by Best Offer
+                $stmt = $db->prepare('SELECT * FROM item WHERE idseller="'.$_SESSION['id'].'"');
+                $stmt->execute();
+                $items = $stmt->fetchAll();
+
+
+                $array = array();
+                foreach($items as $item):
+                    $array[] = $item['id'];
+                endforeach;
+                echo end($array);  // id of the object that the seller just enter
+
+                $records = $db->prepare('INSERT INTO bestoffer (id_seller, price1, id_item, timeStart, timeEnd, dateStart, dateEnd) VALUES ("'.$_SESSION['id'].'", "'.$_POST['price'].'", "'.end($array).'", "'.$timeStart.'", "'.$timeEnd.'","'.$dateStart.'", "'.$dateEnd.'")');
                 $records->execute();
 
             }*/
 
-             /*echo ' Category :' .$category. '/ name :' .$name. '/ photo: '.$picture.' / Description: '.$description.'/ Price: '.$price;*/
-              $startdate =$_POST['startDate'];
-              $endDate = $_POST['endDate'];
-              $startTime =$_POST['startTime'];
-              $endTime = $_POST['endTime'];
         }
     ?>
 

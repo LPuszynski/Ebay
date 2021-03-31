@@ -130,6 +130,8 @@ if (isset($_POST['bid'])){
                             $stmt->execute();
                             $stmt = $db->prepare('UPDATE auctions SET price1 = "'.($price1+1).'" WHERE id_item="'.$_POST['id'].'"');
                             $stmt->execute();
+                            $stmt = $db->prepare('UPDATE item SET price = "'.($price1+1).'" WHERE id="'.$_POST['id'].'"');
+                            $stmt->execute();
                             $stmt = $db->prepare('UPDATE auctions SET id_buyer = "'.$_SESSION['id'].'" WHERE id_item="'.$_POST['id'].'"');
                             $stmt->execute();
                         }
@@ -138,27 +140,54 @@ if (isset($_POST['bid'])){
                             $stmt->execute();
                             $stmt = $db->prepare('UPDATE auctions SET price1 = "'.($price2+1).'" WHERE id_item="'.$_POST['id'].'"');
                             $stmt->execute();
+                            $stmt = $db->prepare('UPDATE item SET price = "'.($price2+1).'" WHERE id="'.$_POST['id'].'"');
+                            $stmt->execute();
                             $stmt = $db->prepare('UPDATE auctions SET id_buyer = "'.$_SESSION['id'].'" WHERE id_item="'.$_POST['id'].'"');
                             $stmt->execute();
                         }
                         elseif ($_POST['bidAmout'] == $price2){
                             $stmt = $db->prepare('UPDATE auctions SET price1 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
                             $stmt->execute();
+                            $stmt = $db->prepare('UPDATE item SET price = "'.$_POST['bidAmout'].'" WHERE id="'.$_POST['id'].'"');
+                            $stmt->execute();
                         }
                         elseif ($_POST['bidAmout'] < $price2){
                             $stmt = $db->prepare('UPDATE auctions SET price1 = "'.($_POST['bidAmout']+1).'" WHERE id_item="'.$_POST['id'].'"');
                             $stmt->execute();
+                            $stmt = $db->prepare('UPDATE item SET price = "'.($_POST['bidAmout']+1).'" WHERE id="'.$_POST['id'].'"');
+                            $stmt->execute();
                         }
                     }
                 }
+        }
+    }
+}
 
-            /*$_SESSION['idItemBid']=$_POST['id'];
-            $_SESSION['id']
-            $date
-            $time
-            $stmt = $db->prepare('UPDATE auctions SET date = "'.$date.'" WHERE idItem="'.$_POST['id'].'" AND idCustomer="'.$_SESSION['id'].'"');
+if (isset($_POST['bestOffer'])){
+    if ($_SESSION['profilFound']!=1){
+        header('Location: http://localhost/GitHub/Ebay/login.php');
+    }
+    else{
+        if ($_POST['bestOfferAmount']!='' && $_POST['bestOfferAmount']!='0'){
+            $stmt = $db->prepare('SELECT * FROM bestoffer WHERE id_item="'.$_POST['id'].'" AND id_customer="'.$_SESSION['id'].'"');
+            $stmt->execute();
+            $user = $stmt->fetch();
+            if ($user==NULL) {
+                $stmt = $db->prepare('SELECT * FROM item WHERE id="'.$_POST['id'].'"');
+                $stmt->execute();
+                $items = $stmt->fetchAll();
+                
+                foreach($items as $item):
+                    $id_seller = $item['idseller'];
+                endforeach;
 
-            $stmt->execute();*/
+                $stmt = $db->prepare('INSERT INTO bestoffer (id_item, id_seller, price, id_customer, state) VALUES ("'.$_POST['id'].'", "'.$id_seller.'", "'.$_POST['bestOfferAmount'].'", "'.$_SESSION['id'].'","1")');
+                $stmt->execute();
+            }
+
+            else{
+                echo 'Vous avez déja fait une offre pour ce produit, veuillez vérifier votre messagerie afin de voir si le vendeur vous a répondu';
+            }
         }
     }
 }
@@ -190,12 +219,12 @@ foreach($cigar as $c):
      if ($c['BuyNow']==1) {
          echo "<div class='BuyNow'>";
          echo "<button type='submit' class='BuyItNow' name='buyNow'>Buy it now !</button>"; 
-         echo "<input type = 'number' placeholder='Your best offer'>";
-         echo "<button type='submit' name='submit'>Place offer!</button>";
+         echo "<input type = 'number' name ='bestOfferAmount' placeholder='Your best offer'>";
+         echo "<button type='submit' name='bestOffer'>Place offer!</button>";
          echo "</div>";
         }
 
-    if ($c['auctions']==1){
+    if ($c['BuyNow']==0){
         echo "<input type = 'number' name='bidAmout' placeholder='Enter your bid'>";
         echo "<button type='submit' name='bid'>Bid !</button>";
     }
