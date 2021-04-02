@@ -38,6 +38,116 @@ session_start();
         }
     }
 
+    if (isset($_POST['bid'])){
+        date_default_timezone_set('Europe/Paris');
+        $date = date('y-m-d');
+        $time = date('H:i');
+        if ($_SESSION['profilFound']!=1){
+            header('Location: http://localhost/GitHub/Ebay/login.php');
+        }
+        else{
+            if ($_POST['bidAmout']!='' && $_POST['bidAmout']!='0'){
+                $stmt = $db->prepare('SELECT * FROM auctions WHERE id_item="'.$_POST['id'].'"');
+                $stmt->execute();
+                $items = $stmt->fetchAll();
+                
+                foreach($items as $item):
+                    $price1 = $item['price1'];
+                    $price2 = $item['price2'];
+                    $timeEnd = $item['timeEnd'];
+                    $dateEnd = $item['dateEnd'];
+                    $timeStart = $item['timeStart'];
+                    $dateStart = $item['dateStart'];
+                endforeach;
+                    //$differenceTime = strtotime($time)-strtotime($item['time']);
+    
+                    if ((strtotime($date)-strtotime($dateEnd)==0 && strtotime($time)<strtotime($timeEnd)) || (strtotime($date)>=strtotime($dateStart) && strtotime($date)<strtotime($dateEnd))){ //we check if its still on time
+                        if ($_POST['bidAmout'] <= $price1){
+                            echo 'rentrez une valeure plus grande que le prix affiché';
+                        }
+    
+                        elseif ($_POST['bidAmout'] > $price1){
+    
+                            $stmt = $db->prepare('SELECT * FROM cart WHERE idItem="'.$_POST['id'].'" AND idCustomer="'.$_SESSION['id'].'"');
+                            $stmt->execute();
+                            $user = $stmt->fetch();
+                            if ($user==NULL) {
+                                $stmt = $db->prepare('INSERT INTO cart (idCustomer, idItem, date, time, auction) VALUES ("'.$_SESSION['id'].'", "'.$_POST['id'].'", "'.$date.'", "'.$time.'","1")');
+                                $stmt->execute();
+                            }
+    
+                            if ($price2 == NULL){
+                                $stmt = $db->prepare('UPDATE auctions SET price2 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
+                                $stmt->execute();
+                                $stmt = $db->prepare('UPDATE auctions SET price1 = "'.($price1+1).'" WHERE id_item="'.$_POST['id'].'"');
+                                $stmt->execute();
+                                $stmt = $db->prepare('UPDATE item SET price = "'.($price1+1).'" WHERE id="'.$_POST['id'].'"');
+                                $stmt->execute();
+                                $stmt = $db->prepare('UPDATE auctions SET id_buyer = "'.$_SESSION['id'].'" WHERE id_item="'.$_POST['id'].'"');
+                                $stmt->execute();
+                            }
+                            elseif ($_POST['bidAmout'] > $price2){
+                                $stmt = $db->prepare('UPDATE auctions SET price2 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
+                                $stmt->execute();
+                                $stmt = $db->prepare('UPDATE auctions SET price1 = "'.($price2+1).'" WHERE id_item="'.$_POST['id'].'"');
+                                $stmt->execute();
+                                $stmt = $db->prepare('UPDATE item SET price = "'.($price2+1).'" WHERE id="'.$_POST['id'].'"');
+                                $stmt->execute();
+                                $stmt = $db->prepare('UPDATE auctions SET id_buyer = "'.$_SESSION['id'].'" WHERE id_item="'.$_POST['id'].'"');
+                                $stmt->execute();
+                            }
+                            elseif ($_POST['bidAmout'] == $price2){
+                                $stmt = $db->prepare('UPDATE auctions SET price1 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
+                                $stmt->execute();
+                                $stmt = $db->prepare('UPDATE item SET price = "'.$_POST['bidAmout'].'" WHERE id="'.$_POST['id'].'"');
+                                $stmt->execute();
+                            }
+                            elseif ($_POST['bidAmout'] < $price2){
+                                $stmt = $db->prepare('UPDATE auctions SET price1 = "'.($_POST['bidAmout']+1).'" WHERE id_item="'.$_POST['id'].'"');
+                                $stmt->execute();
+                                $stmt = $db->prepare('UPDATE item SET price = "'.($_POST['bidAmout']+1).'" WHERE id="'.$_POST['id'].'"');
+                                $stmt->execute();
+                            }
+                        }
+                    }
+            }
+        }
+    }
+
+    if (isset($_POST['bestOffer'])){
+        if ($_SESSION['profilFound']!=1){
+            header('Location: http://localhost/GitHub/Ebay/login.php');
+        }
+        else{
+            if ($_POST['bestOfferAmount']!='' && $_POST['bestOfferAmount']!='0'){
+                date_default_timezone_set('Europe/Paris');
+                $date = date('y-m-d');
+                $time = date('H:i');
+                $stmt = $db->prepare('SELECT * FROM bestoffer WHERE id_item="'.$_POST['id'].'" AND id_customer="'.$_SESSION['id'].'"');
+                $stmt->execute();
+                $user = $stmt->fetch();
+                if ($user==NULL) {
+                    $stmt = $db->prepare('SELECT * FROM item WHERE id="'.$_POST['id'].'"');
+                    $stmt->execute();
+                    $items = $stmt->fetchAll();
+                    
+                    foreach($items as $item):
+                        $id_seller = $item['idseller'];
+                    endforeach;
+    
+                    $stmt = $db->prepare('INSERT INTO bestoffer (id_item, id_seller, price, id_customer, state) VALUES ("'.$_POST['id'].'", "'.$id_seller.'", "'.$_POST['bestOfferAmount'].'", "'.$_SESSION['id'].'","1")');
+                    $stmt->execute();
+                    $stmt = $db->prepare('INSERT INTO cart (idCustomer, idItem, date, time, auction) VALUES ("'.$_SESSION['id'].'", "'.$_POST['id'].'", "'.$date.'", "'.$time.'","2")');
+                    $stmt->execute();
+                }
+    
+                else{
+                    echo 'Vous avez déja fait une offre pour ce produit, veuillez vérifier votre messagerie afin de voir si le vendeur vous a répondu';
+                }
+            }
+        }
+    }
+
         $stmt = $db->prepare('SELECT * FROM cart WHERE idCustomer="'.$_SESSION['id'].'"');
         $stmt->execute();
         $items = $stmt->fetchAll();
@@ -118,8 +228,8 @@ session_start();
                 echo "</div>";
            }
             else{
-                echo "<input type = 'number' placeholder='Enter your bid'>";
-                echo "<button type='submit' name='submit'>Bid !</button>";
+                echo "<input type='number' name='bidAmout' placeholder='Enter your bid'>";
+                echo "<button type='submit' name='bid'>Bid !</button>";
             }
             echo '<input type="hidden" id="id" name="id" value = "'.$c['id'].'"/>';
 
