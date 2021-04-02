@@ -51,7 +51,6 @@ session_start();
         foreach($items as $item):
             if ($item['auction']==NULL){
                 $dayItem = substr($item['date'],8,2);
-
                 $differenceTime = strtotime($time)-strtotime($item['time']);
                 if($dayItem != $day){
                     $records = $db->prepare('DELETE FROM cart WHERE id="'.$item['id'].'"');
@@ -107,14 +106,17 @@ session_start();
             echo "<p class='price'>Price : £".$c['price']."</p>";
 
             echo "<form action = '' method = 'POST'>";
-            if ($c['BuyNow']==1) 
-            {
-            echo "<div class='BuyNow'>";
-            echo "<button type='submit' class='BuyItNow' name='buyNow'>Buy it now !</button>"; 
-            echo "<input type = 'number' placeholder='Your best offer'>";
-            echo "<button type='submit' name='submit'>Place offer!</button>";
-            echo "</div>";
-            }
+            if ($c['BuyNow']==1 || $c['BuyNow']==2 || $c['BuyNow']==3) {
+                echo "<div class='BuyNow'>";
+                if($c['BuyNow']==1 || $c['BuyNow']==3){
+                   echo "<button type='submit' class='BuyItNow' name='buyNow'>Buy it now !</button>";
+                }
+                if($c['BuyNow']==2 || $c['BuyNow']==3){
+                   echo "<input type = 'number' name ='bestOfferAmount' placeholder='Your best offer'>";
+                   echo "<button type='submit' name='bestOffer'>Place offer!</button>";
+                }
+                echo "</div>";
+           }
             else{
                 echo "<input type = 'number' placeholder='Enter your bid'>";
                 echo "<button type='submit' name='submit'>Bid !</button>";

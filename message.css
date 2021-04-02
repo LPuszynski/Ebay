@@ -1,0 +1,60 @@
+.box {
+    background-color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction:column;
+}
+
+.message {
+    background-color: green;
+    height: 300px;
+    width: 700px;
+    display: flex;
+    flex-direction:row;
+    align-items:center;
+    margin-top: 5%;
+    border:1px solid black;
+}
+
+.product {
+    background-color: white;
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    height: 300px;
+    width: 300px;
+}
+
+.proposition {
+    background-color: yellow;
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    text-align: center;
+    height: 300px;
+    width: 300px;
+    margin-left: 10%;
+}
+
+.description {
+    color: saddlebrown;
+    text-align: center;
+    padding: 10px;
+    font-family: 'Syne Mono', monospace;
+}
+
+.price {
+    color: red;
+    margin-top: -10px;
+    font-size: 25px;
+    font-family: 'Syne Mono', monospace;
+}
+
+.images {
+    height: 30%;
+    /*width: 800px;*/
+    width: 30%;
+    /*margin-left:30%;*/
+}

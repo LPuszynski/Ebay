@@ -58,17 +58,39 @@
     date_default_timezone_set('Europe/Paris');
     $date = date('y-m-d');
     $time = date('H:i');
-    $records = $db->prepare('INSERT INTO orderbuynow (id_item, id_customer, id_seller, price, date, time) VALUES ("'.$_SESSION['idItemBuyNow'].'", "'.$_SESSION['id'].'", "'.$_SESSION['idseller'].'", "'.$_SESSION['priceItem'].'", "'.$date.'", "'.$time.'")');
-    $records->execute();
-    $records = $db->prepare('SELECT * FROM cart WHERE idItem="'.$_SESSION['idItemBuyNow'].'"');
-    $records->execute();
-    $items = $records->fetch();
-    if ($items){
-        $records = $db->prepare('DELETE FROM cart WHERE idItem="'.$_SESSION['idItemBuyNow'].'"');
+    if(isset($_SESSION['payBestOffer']) && $_SESSION['payBestOffer']==1){ //by best offer
+        $records = $db->prepare('INSERT INTO ordercustomer (id_item, id_customer, id_seller, price, date, time) VALUES ("'.$_SESSION['idItemBestOffer'].'", "'.$_SESSION['id'].'", "'.$_SESSION['idsellerbestoffer'].'", "'.$_SESSION['pricebestoffer'].'", "'.$date.'", "'.$time.'")');
+        $records->execute();
+        $records = $db->prepare('DELETE FROM cart WHERE idItem="'.$_SESSION['idItemBestOffer'].'"');
+        $records->execute();
+        $records = $db->prepare('UPDATE item SET category = "vendu" WHERE id="'.$_SESSION['idItemBestOffer'].'"');
+        $records->execute();
+        $records = $db->prepare('DELETE FROM bestoffer WHERE id_item="'.$_SESSION['idItemBestOffer'].'"');
         $records->execute();
     }
-    $records = $db->prepare('UPDATE item SET category = "vendu" WHERE id="'.$_SESSION['idItemBuyNow'].'"');
-    $records->execute();
+    elseif(isset($_SESSION['payBestOffer']) && $_SESSION['payBestOffer']==2){  //by auction
+        $records = $db->prepare('INSERT INTO ordercustomer (id_item, id_customer, id_seller, price, date, time) VALUES ("'.$_SESSION['idItemAuction'].'", "'.$_SESSION['id'].'", "'.$_SESSION['idsellerauction'].'", "'.$_SESSION['priceItemAuction'].'", "'.$date.'", "'.$time.'")');
+        $records->execute();
+        $records = $db->prepare('DELETE FROM cart WHERE idItem="'.$_SESSION['idItemAuction'].'"');
+        $records->execute();
+        $records = $db->prepare('UPDATE item SET category = "vendu" WHERE id="'.$_SESSION['idItemAuction'].'"');
+        $records->execute();
+        $records = $db->prepare('DELETE FROM auctions WHERE id_item="'.$_SESSION['idItemAuction'].'"');
+        $records->execute();
+    }
+    else{ // by buy now
+        $records = $db->prepare('INSERT INTO ordercustomer (id_item, id_customer, id_seller, price, date, time) VALUES ("'.$_SESSION['idItemBuyNow'].'", "'.$_SESSION['id'].'", "'.$_SESSION['idseller'].'", "'.$_SESSION['priceItem'].'", "'.$date.'", "'.$time.'")');
+        $records->execute();
+        $records = $db->prepare('SELECT * FROM cart WHERE idItem="'.$_SESSION['idItemBuyNow'].'"');
+        $records->execute();
+        $items = $records->fetch();
+        if ($items){
+            $records = $db->prepare('DELETE FROM cart WHERE idItem="'.$_SESSION['idItemBuyNow'].'"');
+            $records->execute();
+        }
+        $records = $db->prepare('UPDATE item SET category = "vendu" WHERE id="'.$_SESSION['idItemBuyNow'].'"');
+        $records->execute();
+    }
 ?>
 
 <form action = 'index.php' method = 'POST' id='formReturnToMenu'>

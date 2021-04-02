@@ -26,14 +26,60 @@
 <li><a href="">Your account </a></li>
 </div>
 -->
+<?php
+	session_start();
 
+	//connection cith the db
+	try
+	{
+
+	//$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', '');	
+	$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
+
+	}
+	catch (Exception $e)
+	{
+			die('Erreur : ' . $e->getMessage());
+	}
+
+	if($_SESSION['profilFound']==1){
+		$i=0;
+		date_default_timezone_set('Europe/Paris');
+		$date = date('y-m-d');
+		$time = date('H:i');
+		$stmt = $db->prepare('SELECT * FROM auctions WHERE id_buyer="'.$_SESSION['id'].'"');
+		$stmt->execute();
+		$items = $stmt->fetchAll();
+	
+		foreach($items as $item):
+			$i=$i+1;
+			$idAuction = $item['id'];
+			$idItem = $item['id_item'];
+			$timeEnd = $item['timeEnd'];
+			$dateEnd = $item['dateEnd'];
+			$timeStart = $item['timeStart'];
+			$dateStart = $item['dateStart'];
+			$_SESSION['priceItemAuction'] = $item['price1'];
+		endforeach;
+
+		if($i>0){
+			if ((strtotime($date)-strtotime($dateEnd)==0 && strtotime($time)<strtotime($timeEnd)) || (strtotime($date)>=strtotime($dateStart) && strtotime($date)<strtotime($dateEnd))){ //we check if its still on time
+			}
+			else{
+				$stmt = $db->prepare('UPDATE auctions SET end = "1" WHERE id="'.$idAuction.'"');
+				$stmt->execute();
+				$stmt = $db->prepare('UPDATE item SET price = "'.$_SESSION['priceItemAuction'].'" WHERE id="'.$idItem.'"');
+				$stmt->execute();
+			}
+		}
+	}
+?>
 
 
 
 <div id="tlois">
 	 &emsp;CIGAR SHOP SINCE 1955 &emsp; &emsp; &emsp;&emsp; &emsp;&emsp; &emsp;&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; 
 	 <?php
-	 session_start();
 	 if (isset($_SESSION['profilFound'])==0){ //if the variable that indicate the type of the user isnt declared
 		$_SESSION['profilFound']=0;  // the user is considered as a visitor
 	 }

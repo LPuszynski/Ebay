@@ -111,6 +111,14 @@ if (isset ($_POST['submit'])){
 		$_SESSION['id']=0;
 		header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
 	}
+
+	$stmt = $db->prepare('SELECT * FROM cart WHERE idCustomer="0"');
+	$stmt->execute();
+	$users = $stmt->fetchAll();
+	foreach($users as $user):
+		$stmt = $db->prepare('UPDATE cart SET idCustomer = "'.$_SESSION['id'].'" WHERE id="'.$user['id'].'"');
+        $stmt->execute();
+	endforeach;
 }
 ?>
 

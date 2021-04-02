@@ -75,9 +75,21 @@
 			$_SESSION['profilFound'] = 1; //He is a customer in the DB
 	endforeach;
 
-    $stmt = $db->prepare('SELECT * FROM item WHERE id="'.$_SESSION['idItemBuyNow'].'"');
-    $stmt->execute();
-    $items = $stmt->fetchAll();
+    if(isset($_SESSION['payBestOffer']) && $_SESSION['payBestOffer']==1){ //payement of a best offer
+        $stmt = $db->prepare('SELECT * FROM item WHERE id="'.$_SESSION['idItemBestOffer'].'"');
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+    }
+    elseif(isset($_SESSION['payBestOffer']) && $_SESSION['payBestOffer']==2){ //payement of an auction
+        $stmt = $db->prepare('SELECT * FROM item WHERE id="'.$_SESSION['idItemAuction'].'"');
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+    }
+    else{ //payement of a buyNow
+        $stmt = $db->prepare('SELECT * FROM item WHERE id="'.$_SESSION['idItemBuyNow'].'"');
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+    }
 
 
     foreach($items as $c):

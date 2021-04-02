@@ -36,7 +36,7 @@ catch (Exception $e)
     die('Erreur : ' . $e->getMessage());
 }
 
-
+$_SESSION['payBestOffer']=0;
 if (isset($_POST['cart'])){
     date_default_timezone_set('Europe/Paris');
     $date = date('y-m-d');
@@ -169,6 +169,9 @@ if (isset($_POST['bestOffer'])){
     }
     else{
         if ($_POST['bestOfferAmount']!='' && $_POST['bestOfferAmount']!='0'){
+            date_default_timezone_set('Europe/Paris');
+            $date = date('y-m-d');
+            $time = date('H:i');
             $stmt = $db->prepare('SELECT * FROM bestoffer WHERE id_item="'.$_POST['id'].'" AND id_customer="'.$_SESSION['id'].'"');
             $stmt->execute();
             $user = $stmt->fetch();
@@ -182,6 +185,8 @@ if (isset($_POST['bestOffer'])){
                 endforeach;
 
                 $stmt = $db->prepare('INSERT INTO bestoffer (id_item, id_seller, price, id_customer, state) VALUES ("'.$_POST['id'].'", "'.$id_seller.'", "'.$_POST['bestOfferAmount'].'", "'.$_SESSION['id'].'","1")');
+                $stmt->execute();
+                $stmt = $db->prepare('INSERT INTO cart (idCustomer, idItem, date, time, auction) VALUES ("'.$_SESSION['id'].'", "'.$_POST['id'].'", "'.$date.'", "'.$time.'","2")');
                 $stmt->execute();
             }
 
@@ -216,13 +221,17 @@ foreach($cigar as $c):
      
      echo "<form action = '' method = 'POST'>";
 
-     if ($c['BuyNow']==1) {
+     if ($c['BuyNow']==1 || $c['BuyNow']==2 || $c['BuyNow']==3) {
          echo "<div class='BuyNow'>";
-         echo "<button type='submit' class='BuyItNow' name='buyNow'>Buy it now !</button>"; 
-         echo "<input type = 'number' name ='bestOfferAmount' placeholder='Your best offer'>";
-         echo "<button type='submit' name='bestOffer'>Place offer!</button>";
-         echo "</div>";
+         if($c['BuyNow']==1 || $c['BuyNow']==3){
+            echo "<button type='submit' class='BuyItNow' name='buyNow'>Buy it now !</button>";
+         }
+         if($c['BuyNow']==2 || $c['BuyNow']==3){
+            echo "<input type = 'number' name ='bestOfferAmount' placeholder='Your best offer'>";
+            echo "<button type='submit' name='bestOffer'>Place offer!</button>";
         }
+        echo "</div>";
+    }
 
     if ($c['BuyNow']==0){
         echo "<input type = 'number' name='bidAmout' placeholder='Enter your bid'>";
