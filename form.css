@@ -240,7 +240,7 @@ a {
             flex-direction:column;
             align-items:center;
             margin-top: 6%;
-            margin-right: 6%;
+            margin-right: 10%;
         }
         
         .product {
@@ -249,7 +249,8 @@ a {
             flex-direction:column;
             align-items:center;
             border-right: 0.5mm dashed black;
-            padding-right: 6%;
+            padding-right: 10%;
+            margin-left: 20%;
         }
         
         .description {

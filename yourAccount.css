@@ -1,0 +1,41 @@
+body {
+    background-color: wheat;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.product {
+    background-color: white;
+    height: 500px;
+    width: 400px;
+    display: flex;
+    flex-direction:column;
+    margin-right:40px;
+    align-items:center;
+    margin-top: 3%;
+}
+
+.description {
+    color: saddlebrown;
+    text-align: center;
+    padding: 10px;
+    font-family: 'Syne Mono', monospace;
+}
+
+.price {
+    color: red;
+    margin-top: -10px;
+    font-size: 25px;
+    font-family: 'Syne Mono', monospace;
+}
+
+img{
+    height: 30%;
+    width: 30%;
+}
+

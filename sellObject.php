@@ -78,9 +78,9 @@ Picture of the product : <input type="file" id="product_picture" name="product_p
 
     <div id='AAA'>
      <input type="text" class="infos" id="startDate" name="startDate" placeholder="Beginning : (YEAR/MONTH/DAY)"><br>
-    <input type="text" class="infos" id="startTime" name="startTime"placeholder="Beginning : (H/MIN/S)"><br>
+    <input type="text" class="infos" id="startTime" name="startTime"placeholder="Beginning : (H:MIN)"><br>
      <input type="text" class="infos" id="endDate" name="endDate"placeholder="End : (YEAR/MONTH/DAY)"><br>
-    <input type="text" class="infos" id="endTime" name="endTime"placeholder="End : (H/MIN/S)"><br>
+    <input type="text" class="infos" id="endTime" name="endTime"placeholder="End : (H:MIN)"><br>
    </div>
             
 

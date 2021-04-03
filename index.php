@@ -42,7 +42,7 @@
 			die('Erreur : ' . $e->getMessage());
 	}
 
-	if($_SESSION['profilFound']==1){
+	if(isset($_SESSION['profilFound']) && $_SESSION['profilFound']==1){
 		$i=0;
 		date_default_timezone_set('Europe/Paris');
 		$date = date('y-m-d');
@@ -132,13 +132,13 @@
 		echo '<li> <a href="sellObject.php">Sell </a></li>';
 	}
 ?>
-<li><a href="yourAccount">Your account </a></li></ul>
+<li><a href="yourAccount.php">Your account </a></li></ul>
 <?php
 if($_SESSION['profilFound']!=0){
 	echo '<div id="personnalInfo">'.$_SESSION['firstname'].'&emsp; &emsp;'.$_SESSION['lastname'].'</div>';
+	echo '<a href="message.php" id="message"><img src="message.png" width="50px"></i></a>';
 }
 ?>
-<a href="message.php" id="message"><img src="message.png" width="50px"></i></a>
 <a href="cart.php"><i class="fas fa-shopping-cart"></i></a>
 </div>
 

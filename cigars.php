@@ -107,6 +107,7 @@ if (isset($_POST['bid'])){
                 $dateEnd = $item['dateEnd'];
                 $timeStart = $item['timeStart'];
                 $dateStart = $item['dateStart'];
+                $id_buyer = $item['id_buyer'];
             endforeach;
                 //$differenceTime = strtotime($time)-strtotime($item['time']);
 
@@ -135,6 +136,19 @@ if (isset($_POST['bid'])){
                             $stmt = $db->prepare('UPDATE auctions SET id_buyer = "'.$_SESSION['id'].'" WHERE id_item="'.$_POST['id'].'"');
                             $stmt->execute();
                         }
+                        /*
+                        //Si le meme customer fait 2 bid d'affilé
+                        if(isset($id_buyer) && $id_buyer==$_SESSION['id']){
+                            //si le bid est plus grand que son ancien bid on change juste price2
+                            if($_POST['bidAmout'] > $price2){
+                                $stmt = $db->prepare('UPDATE auctions SET price2 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
+                                $stmt->execute();
+                            }
+                            //si le bid est inferieur a son ancien bid on ne fait rien
+                            elseif($_POST['bidAmout'] <= $price2){
+                                echo 'You already bid on that item for more money, make a better bid or wait for the end of the auction';
+                            }
+                        }*/
                         elseif ($_POST['bidAmout'] > $price2){
                             $stmt = $db->prepare('UPDATE auctions SET price2 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
                             $stmt->execute();
@@ -157,8 +171,9 @@ if (isset($_POST['bid'])){
                             $stmt = $db->prepare('UPDATE item SET price = "'.($_POST['bidAmout']+1).'" WHERE id="'.$_POST['id'].'"');
                             $stmt->execute();
                         }
-                    }
+                    
                 }
+            }
         }
     }
 }

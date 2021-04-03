@@ -23,6 +23,18 @@ session_start();
             die('Erreur : ' . $e->getMessage());
     }
 
+    //si objets dans le cart alors que pas connecté, les objets se mettent dans le cart de celui qui se connecte
+    if(isset($_SESSION['id'])){
+        $stmt = $db->prepare('SELECT * FROM cart');
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        foreach($items as $item):
+            if($item['idCustomer']==0){
+                $item['idCustomer']=$_SESSION['id'];
+            }
+        endforeach;
+    }
+
     date_default_timezone_set('Europe/Paris');
     $day = date('d');
     $date = date('y-m-d');
@@ -136,8 +148,6 @@ session_start();
                     endforeach;
     
                     $stmt = $db->prepare('INSERT INTO bestoffer (id_item, id_seller, price, id_customer, state) VALUES ("'.$_POST['id'].'", "'.$id_seller.'", "'.$_POST['bestOfferAmount'].'", "'.$_SESSION['id'].'","1")');
-                    $stmt->execute();
-                    $stmt = $db->prepare('INSERT INTO cart (idCustomer, idItem, date, time, auction) VALUES ("'.$_SESSION['id'].'", "'.$_POST['id'].'", "'.$date.'", "'.$time.'","2")');
                     $stmt->execute();
                 }
     
