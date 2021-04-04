@@ -107,6 +107,17 @@ if (isset ($_POST['submit'])){
 			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
 		}
 	endforeach;
+
+	$stmt = $db->prepare('SELECT * FROM administrator WHERE username="'.$mail.'"');
+	$stmt->execute();
+	$users = $stmt->fetchAll();
+	foreach($users as $user):
+		if (strcmp ( $user['password'], $password) == 0){
+			$_SESSION['id']=$user['id'];
+			$_SESSION['profilFound'] = 3; //He is a admin in the DB
+			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
+		}
+	endforeach;
 	if($_SESSION['profilFound'] == 0){    //in order to allow a visitor to have a cart
 		$_SESSION['id']=0;
 		header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */

@@ -96,8 +96,10 @@
 	if($_SESSION['profilFound']!=0){
 		echo '	 <a href="signOut.php" >SIGN OUT</a>  &emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;';
 	}
+	if($_SESSION['profilFound']==3){
+		echo '<a href="admin.php" class="admin" > <i class="fas fa-user-cog"></i> </a>';
+	}
 	?>
-	<a href="" class="admin" > <i class="fas fa-user-cog"></i> </a>
 </div>	
 
 
@@ -132,9 +134,14 @@
 		echo '<li> <a href="sellObject.php">Sell </a></li>';
 	}
 ?>
-<li><a href="yourAccount.php">Your account </a></li></ul>
 <?php
-if($_SESSION['profilFound']!=0){
+	if($_SESSION['profilFound']!=3){
+		echo '<li><a href="yourAccount.php">Your account </a></li></ul>';
+	}
+?>
+
+<?php
+if($_SESSION['profilFound']!=0 && $_SESSION['profilFound']!=3){
 	echo '<div id="personnalInfo">'.$_SESSION['firstname'].'&emsp; &emsp;'.$_SESSION['lastname'].'</div>';
 	echo '<a href="message.php" id="message"><img src="message.png" width="50px"></i></a>';
 }

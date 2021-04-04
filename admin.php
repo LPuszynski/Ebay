@@ -18,7 +18,7 @@
 	try
 	{
 
-	$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', '');	
+	$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', '');	
 	//$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
 
 	}
@@ -96,26 +96,27 @@
 	if($_SESSION['profilFound']==2){
 		echo '<li> <a href="sellObject.php">Sell </a></li>';
 	}
+	if($_SESSION['profilFound']!=3){
+		echo '<li><a href="yourAccount">Your account </a></li></ul>';
+	}
 ?>
-<li><a href="yourAccount">Your account </a></li></ul>
 <?php
-if($_SESSION['profilFound']!=0){
+if($_SESSION['profilFound']!=0 && $_SESSION['profilFound']!=3){
 	echo '<div id="personnalInfo">'.$_SESSION['firstname'].'&emsp; &emsp;'.$_SESSION['lastname'].'</div>';
+	echo '<a href="message.php" id="message"><img src="message.png" width="50px"></i></a>';
 }
 ?>
-<a href="message.php" id="message"><img src="message.png" width="50px"></i></a>
 <a href="cart.php"><i class="fas fa-shopping-cart"></i></a>
 </div>
 
 
 <?php 
-session_start();
 
 //connection cith the db
 try
 {
     
-    $db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
+    $db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
     /*$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', '');*/ /* Port de thomas = 3307 / Port de Lois = 3306 */
     
     
