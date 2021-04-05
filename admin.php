@@ -18,8 +18,8 @@
 	try
 	{
 
-	$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', '');	
-	//$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
+	//$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', '');	
+	$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
 
 	}
 	catch (Exception $e)
@@ -116,8 +116,8 @@ if($_SESSION['profilFound']!=0 && $_SESSION['profilFound']!=3){
 try
 {
     
-    $db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
-    /*$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', '');*/ /* Port de thomas = 3307 / Port de Lois = 3306 */
+  //  $db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
+    $db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
     
     
 }
@@ -140,7 +140,7 @@ foreach($sellers as $seller):
      echo $seller['firstname']."  ";
      echo $seller['lastname'];
      //echo "<button type='submit' value='Delete Seller' id='".$seller['
-     echo '<a href="admin.php?delete='.$seller["id"].'"><span>Delete this seller </span> </a>';
+     echo '<a href="admin.php?delete='.$seller["id"].'"><span>Delete this seller </span> </a><br><br>';
         
 	
     endforeach;

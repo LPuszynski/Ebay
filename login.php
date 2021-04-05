@@ -36,7 +36,7 @@
 <li> Categories
             <ul>
 <li><a href="cigars.php">Cigars</a></li>
-<li><a href="">Accessories</li></li>
+<li><a href="Accessories.php">Accessories</li></li></ul>
 </ul><li> <a href="sellObject.php">Sell </a></li>
 <li><a href="">Your account </a></li></ul>
 <a href="cart.php"><i class="fas fa-shopping-cart"></i></a>
@@ -49,8 +49,8 @@ $_SESSION['profilFound'] = 0;
 try
 {
 
-//$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', '');	
-$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
+$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', '');	
+//$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
 
 }
 catch (Exception $e)
@@ -90,8 +90,9 @@ if (isset ($_POST['submit'])){
 			$_SESSION['expiration_date']=$user['expiration_date'];
 			$_SESSION['cvc']=$user['cvc'];
 			$_SESSION['profilFound'] = 1; //He is a customer in the DB
-			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
-		}
+			//header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
+			header("Location: http://localhost/Ebay/index.php");
+			}
 	endforeach;
 
 	//If he is a seller
@@ -104,7 +105,8 @@ if (isset ($_POST['submit'])){
 			$_SESSION['lastname']=$user['lastname'];
 			$_SESSION['firstname']=$user['firstname'];	
 			$_SESSION['profilFound'] = 2; //He is a seller in the DB
-			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
+			header("Location: http://localhost/Ebay/index.php");
+			//header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
 		}
 	endforeach;
 
@@ -115,12 +117,14 @@ if (isset ($_POST['submit'])){
 		if (strcmp ( $user['password'], $password) == 0){
 			$_SESSION['id']=$user['id'];
 			$_SESSION['profilFound'] = 3; //He is a admin in the DB
-			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
+				header("Location: http://localhost/Ebay/index.php");
+			//header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
 		}
 	endforeach;
 	if($_SESSION['profilFound'] == 0){    //in order to allow a visitor to have a cart
 		$_SESSION['id']=0;
-		header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
+			header("Location: http://localhost/Ebay/index.php");
+		//header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
 	}
 
 	$stmt = $db->prepare('SELECT * FROM cart WHERE idCustomer="0"');

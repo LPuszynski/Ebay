@@ -34,9 +34,9 @@
 <li> Categories 
 <ul>
 <li><a href="cigars.php">Cigars</a></li>
-<li><a href="">Accessories</li></li>
+<li><a href="Accessories.php">Accessories</li></li>
 </ul><li> <a href="sellObject.php">Sell </a></li>
-<li><a href="">Your account </a></li></ul>
+<li><a href="YourAccount.php">Your account </a></li></ul>
 <a href="cart.php"><i class="fas fa-shopping-cart"></i></a>
 </div><br><br>
 
@@ -48,7 +48,7 @@
     session_start();
     try
     {
-        $db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */	
+        $db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */	
         //$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
     }
     catch (Exception $e)
@@ -112,11 +112,11 @@
             endforeach;
 
     if (isset ($_POST['change'])){
-        header("Location: http://localhost/GitHub/Ebay/buyNow.php"); /* Redirection du navigateur */
+        header("Location: http://localhost/Ebay/buyNow.php"); /* Redirection du navigateur */
     }
 
     if (isset ($_POST['confirm'])){
-        header("Location: http://localhost/GitHub/Ebay/buyingBDD.php"); /* Redirection du navigateur */
+        header("Location: http://localhost/Ebay/buyingBDD.php"); /* Redirection du navigateur */
     }
     $numberCardend = substr($_SESSION['cardnumber'],4,strlen($_SESSION['cardnumber']));
     $numberStartCardNumber = substr($_SESSION['cardnumber'],0,4);

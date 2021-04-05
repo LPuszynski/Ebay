@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="products.css">
-    <title>Cigars to buy</title>
+    <title>Accessories to buy</title>
      <link rel="icon" type="image/png" href="icon.png"/>
 
      <script type="text/javascript">
@@ -55,7 +55,6 @@
             <ul>
 <li><a href="cigars.php">Cigars</a></li>
 <li><a href="Accessories.php">Accessories</li></li></ul>
-
 <?php
 	if($_SESSION['profilFound']==2){
 		echo '<li> <a href="sellObject.php">Sell </a></li>';
@@ -273,7 +272,7 @@ if (isset($_POST['bestOffer'])){
     }
 }
 
-$stmt = $db->prepare('SELECT * FROM item WHERE category="cigars"');
+$stmt = $db->prepare('SELECT * FROM item WHERE category="accessories"');
 $stmt->execute();
 $cigar = $stmt->fetchAll();
 

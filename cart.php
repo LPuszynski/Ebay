@@ -13,7 +13,7 @@ session_start();
     $total = 0;
     //connection cith the db
     try{
-        $db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
+        $db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
     /*$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', '');*/ /* Port de thomas = 3307 / Port de Lois = 3306 */
 
         
@@ -42,11 +42,11 @@ session_start();
 
     if (isset($_POST['buyNow'])){ // if the user click on buyNow
         if ($_SESSION['profilFound']!=1){
-            header('Location: http://localhost/GitHub/Ebay/login.php'); //If nobody is connected we go to login
+            header('Location: http://localhost/Ebay/login.php'); //If nobody is connected we go to login
         }
         else{
             $_SESSION['idItemBuyNow']=$_POST['id'];
-            header('Location: http://localhost/GitHub/Ebay/buyingConfirmation.php');  // else we go to the buying page
+            header('Location: http://localhost/Ebay/buyingConfirmation.php');  // else we go to the buying page
         }
     }
 
@@ -55,7 +55,7 @@ session_start();
         $date = date('y-m-d');
         $time = date('H:i');
         if ($_SESSION['profilFound']!=1){
-            header('Location: http://localhost/GitHub/Ebay/login.php'); //If nobody is connected we go to login
+            header('Location: http://localhost/Ebay/login.php'); //If nobody is connected we go to login
         }
         else{
             if ($_POST['bidAmout']!='' && $_POST['bidAmout']!='0'){ //we check if the user enter a number
@@ -127,7 +127,7 @@ session_start();
 
     if (isset($_POST['bestOffer'])){
         if ($_SESSION['profilFound']!=1){
-            header('Location: http://localhost/GitHub/Ebay/login.php');
+            header('Location: http://localhost/Ebay/login.php');
         }
         else{
             if ($_POST['bestOfferAmount']!='' && $_POST['bestOfferAmount']!='0'){

@@ -13,7 +13,7 @@
     session_start();
     $_SESSION['profilFound']=0;
     $_SESSION['id']=0;
-    header('Location: http://localhost/GitHub/Ebay/index.php');
+    header('Location: http://localhost/Ebay/index.php');
 ?>
 
  </body>

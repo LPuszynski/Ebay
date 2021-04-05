@@ -14,7 +14,7 @@
     try
     {
         
-        $db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
+        $db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
         /*$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', '');*/ /* Port de thomas = 3307 / Port de Lois = 3306 */
         
         
@@ -44,7 +44,7 @@
             $_SESSION['payBestOffer']=1;
             $stmt = $db->prepare('UPDATE bestoffer SET state = "6" WHERE id="'.$_POST['idBestOffer'].'"');
             $stmt->execute();
-            header("Location: http://localhost/GitHub/Ebay/buyingConfirmation.php"); /* Redirection du navigateur */
+            header("Location: http://localhost/Ebay/buyingConfirmation.php"); /* Redirection du navigateur */
         }
         if (isset($_POST['payAuction'])){
             //echo $_POST['idItemAuction'];
@@ -61,7 +61,7 @@
             $_SESSION['payBestOffer']=2;
 
 
-            header("Location: http://localhost/GitHub/Ebay/buyingConfirmation.php"); /* Redirection du navigateur */
+            header("Location: http://localhost/Ebay/buyingConfirmation.php"); /* Redirection du navigateur */
         }
         if (isset($_POST['decline'])){
             $records = $db->prepare('DELETE FROM bestoffer WHERE id="'.$_POST['idBestOffer'].'"');
