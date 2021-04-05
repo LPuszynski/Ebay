@@ -52,6 +52,8 @@ catch (Exception $e)
         die('Erreur : ' . $e->getMessage());
 }
 
+// in order to change informations of the user  before making command
+
 if (isset ($_POST['submit'])){
 	
 	if ($_POST['firstname']!='')

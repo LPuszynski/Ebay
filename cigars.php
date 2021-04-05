@@ -43,12 +43,12 @@ if (isset($_POST['cart'])){
     $time = date('H:i');
 
 
-
-    if ($_SESSION['profilFound']==0){
+// the item is connected to the cart with the id of the customer
+    if ($_SESSION['profilFound']==0){ // if the user is an guest
         $stmt = $db->prepare('SELECT * FROM cart WHERE idItem="'.$_POST['id'].'" AND idCustomer="0"');
         $stmt->execute();
         $user = $stmt->fetch();
-        if ($user) {
+        if ($user) { //if the item is already on cart, we just update the hour and date
             $stmt = $db->prepare('UPDATE cart SET date = "'.$date.'" WHERE idItem="'.$_POST['id'].'" AND idCustomer="0"');
             $stmt->execute();
             $stmt = $db->prepare('UPDATE cart SET time = "'.$time.'" WHERE idItem="'.$_POST['id'].'" AND idCustomer="0"');
@@ -59,7 +59,7 @@ if (isset($_POST['cart'])){
             $stmt->execute();      
         }
     }
-        else{
+        else{ // if the user is connected
             $stmt = $db->prepare('SELECT * FROM cart WHERE idItem="'.$_POST['id'].'" AND idCustomer="'.$_SESSION['id'].'"');
             $stmt->execute();
             $user = $stmt->fetch();
@@ -78,29 +78,29 @@ if (isset($_POST['cart'])){
 
 
 if (isset($_POST['buyNow'])){
-    if ($_SESSION['profilFound']!=1){
+    if ($_SESSION['profilFound']!=1){ // if nobody is connected we go to login
         header('Location: http://localhost/GitHub/Ebay/login.php');
     }
-    else{
+    else{ // else wa go to the buying page
         $_SESSION['idItemBuyNow']=$_POST['id'];
         header('Location: http://localhost/GitHub/Ebay/buyingConfirmation.php');
     }
 }
 
 if (isset($_POST['bid'])){
-    date_default_timezone_set('Europe/Paris');
+    date_default_timezone_set('Europe/Paris');//we set the time and the date
     $date = date('y-m-d');
     $time = date('H:i');
-    if ($_SESSION['profilFound']!=1){
+    if ($_SESSION['profilFound']!=1){// if nobody is connected we go to login
         header('Location: http://localhost/GitHub/Ebay/login.php');
     }
     else{
-        if ($_POST['bidAmout']!='' && $_POST['bidAmout']!='0'){
+        if ($_POST['bidAmout']!='' && $_POST['bidAmout']!='0'){ // we check if an amount is set
             $stmt = $db->prepare('SELECT * FROM auctions WHERE id_item="'.$_POST['id'].'"');
             $stmt->execute();
             $items = $stmt->fetchAll();
             
-            foreach($items as $item):
+            foreach($items as $item): // we take all of the informations we need on the item
                 $price1 = $item['price1'];
                 $price2 = $item['price2'];
                 $timeEnd = $item['timeEnd'];
@@ -109,11 +109,10 @@ if (isset($_POST['bid'])){
                 $dateStart = $item['dateStart'];
                 $id_buyer = $item['id_buyer'];
             endforeach;
-                //$differenceTime = strtotime($time)-strtotime($item['time']);
 
                 if ((strtotime($date)-strtotime($dateEnd)==0 && strtotime($time)<strtotime($timeEnd)) || (strtotime($date)>=strtotime($dateStart) && strtotime($date)<strtotime($dateEnd))){ //we check if its still on time
                     if ($_POST['bidAmout'] <= $price1){
-                        echo 'rentrez une valeure plus grande que le prix affiché';
+                        echo 'enter a value greater than the displayed price';
                     }
 
                     elseif ($_POST['bidAmout'] > $price1){
@@ -121,34 +120,24 @@ if (isset($_POST['bid'])){
                         $stmt = $db->prepare('SELECT * FROM cart WHERE idItem="'.$_POST['id'].'" AND idCustomer="'.$_SESSION['id'].'"');
                         $stmt->execute();
                         $user = $stmt->fetch();
-                        if ($user==NULL) {
+                        if ($user==NULL) { // put the article on the cart
                             $stmt = $db->prepare('INSERT INTO cart (idCustomer, idItem, date, time, auction) VALUES ("'.$_SESSION['id'].'", "'.$_POST['id'].'", "'.$date.'", "'.$time.'","1")');
                             $stmt->execute();
                         }
 
-                        if ($price2 == NULL){
-                            $stmt = $db->prepare('UPDATE auctions SET price2 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
+                        if ($price2 == NULL){ // if it is the first bid
+                            $stmt = $db->prepare('UPDATE auctions SET price2 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');//we set the price2 
                             $stmt->execute();
-                            $stmt = $db->prepare('UPDATE auctions SET price1 = "'.($price1+1).'" WHERE id_item="'.$_POST['id'].'"');
+                            $stmt = $db->prepare('UPDATE auctions SET price1 = "'.($price1+1).'" WHERE id_item="'.$_POST['id'].'"');//we set the price1
                             $stmt->execute();
-                            $stmt = $db->prepare('UPDATE item SET price = "'.($price1+1).'" WHERE id="'.$_POST['id'].'"');
+                            $stmt = $db->prepare('UPDATE item SET price = "'.($price1+1).'" WHERE id="'.$_POST['id'].'"');//we set the price of the item
                             $stmt->execute();
-                            $stmt = $db->prepare('UPDATE auctions SET id_buyer = "'.$_SESSION['id'].'" WHERE id_item="'.$_POST['id'].'"');
+                            $stmt = $db->prepare('UPDATE auctions SET id_buyer = "'.$_SESSION['id'].'" WHERE id_item="'.$_POST['id'].'"');//we set the id of the buyer
                             $stmt->execute();
                         }
-                        /*
-                        //Si le meme customer fait 2 bid d'affilé
-                        if(isset($id_buyer) && $id_buyer==$_SESSION['id']){
-                            //si le bid est plus grand que son ancien bid on change juste price2
-                            if($_POST['bidAmout'] > $price2){
-                                $stmt = $db->prepare('UPDATE auctions SET price2 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
-                                $stmt->execute();
-                            }
-                            //si le bid est inferieur a son ancien bid on ne fait rien
-                            elseif($_POST['bidAmout'] <= $price2){
-                                echo 'You already bid on that item for more money, make a better bid or wait for the end of the auction';
-                            }
-                        }*/
+                        
+                        // if the price is bigger than the hidden price (price2)
+                        // we update the price2 and the price1 and the id of the buyer
                         elseif ($_POST['bidAmout'] > $price2){
                             $stmt = $db->prepare('UPDATE auctions SET price2 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
                             $stmt->execute();
@@ -159,13 +148,14 @@ if (isset($_POST['bid'])){
                             $stmt = $db->prepare('UPDATE auctions SET id_buyer = "'.$_SESSION['id'].'" WHERE id_item="'.$_POST['id'].'"');
                             $stmt->execute();
                         }
-                        elseif ($_POST['bidAmout'] == $price2){
+
+                        elseif ($_POST['bidAmout'] == $price2){//if the price is equal than the price2 we dont change the id of the buyer, we consider that the item is still won by the first buyer
                             $stmt = $db->prepare('UPDATE auctions SET price1 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
                             $stmt->execute();
                             $stmt = $db->prepare('UPDATE item SET price = "'.$_POST['bidAmout'].'" WHERE id="'.$_POST['id'].'"');
                             $stmt->execute();
                         }
-                        elseif ($_POST['bidAmout'] < $price2){
+                        elseif ($_POST['bidAmout'] < $price2){//if the price is betwenn the price1 and price2
                             $stmt = $db->prepare('UPDATE auctions SET price1 = "'.($_POST['bidAmout']+1).'" WHERE id_item="'.$_POST['id'].'"');
                             $stmt->execute();
                             $stmt = $db->prepare('UPDATE item SET price = "'.($_POST['bidAmout']+1).'" WHERE id="'.$_POST['id'].'"');
@@ -184,13 +174,13 @@ if (isset($_POST['bestOffer'])){
     }
     else{
         if ($_POST['bestOfferAmount']!='' && $_POST['bestOfferAmount']!='0'){
-            date_default_timezone_set('Europe/Paris');
+            date_default_timezone_set('Europe/Paris'); // we set the date and the time
             $date = date('y-m-d');
             $time = date('H:i');
             $stmt = $db->prepare('SELECT * FROM bestoffer WHERE id_item="'.$_POST['id'].'" AND id_customer="'.$_SESSION['id'].'"');
             $stmt->execute();
             $user = $stmt->fetch();
-            if ($user==NULL) {
+            if ($user==NULL) { //if there is not already a best offer
                 $stmt = $db->prepare('SELECT * FROM item WHERE id="'.$_POST['id'].'"');
                 $stmt->execute();
                 $items = $stmt->fetchAll();
@@ -198,7 +188,7 @@ if (isset($_POST['bestOffer'])){
                 foreach($items as $item):
                     $id_seller = $item['idseller'];
                 endforeach;
-
+                //we set the best offer and put the item on the cart
                 $stmt = $db->prepare('INSERT INTO bestoffer (id_item, id_seller, price, id_customer, state) VALUES ("'.$_POST['id'].'", "'.$id_seller.'", "'.$_POST['bestOfferAmount'].'", "'.$_SESSION['id'].'","1")');
                 $stmt->execute();
                 $stmt = $db->prepare('INSERT INTO cart (idCustomer, idItem, date, time, auction) VALUES ("'.$_SESSION['id'].'", "'.$_POST['id'].'", "'.$date.'", "'.$time.'","2")');
@@ -227,7 +217,7 @@ foreach($cigar as $c):
      echo "<h3>".$c['name']."</h3>";
      
      
-     echo $c['photos'] = substr($c['photos'],36); // thomas enleve cette ligne si pour toi ça bug
+     $c['photos'] = substr($c['photos'],36); // thomas enleve cette ligne si pour toi ça bug
      echo "<img src=Cigars_pictures/".$c['photos']." width='150px' >";
      
      
@@ -254,7 +244,7 @@ foreach($cigar as $c):
     }
 
     echo '<div class="cart"> <button type="submit" id="cart" name="cart"> Cart </div>';
-    echo '<input type="hidden" id="id" name="id" value = "'.$c['id'].'"/>';
+    echo '<input type="hidden" id="id" name="id" value = "'.$c['id'].'"/>';  // in order to have the id of the item that we click on
     echo "</form>";
         
 

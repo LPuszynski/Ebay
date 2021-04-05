@@ -55,9 +55,11 @@
     {
         die('Erreur : ' . $e->getMessage());
     }
-    date_default_timezone_set('Europe/Paris');
+    date_default_timezone_set('Europe/Paris');  //we set the date and the time
     $date = date('y-m-d');
     $time = date('H:i');
+
+    //we enter the customer's information in ordercustomer
     if(isset($_SESSION['payBestOffer']) && $_SESSION['payBestOffer']==1){ //by best offer
         $records = $db->prepare('INSERT INTO ordercustomer (id_item, id_customer, id_seller, price, date, time) VALUES ("'.$_SESSION['idItemBestOffer'].'", "'.$_SESSION['id'].'", "'.$_SESSION['idsellerbestoffer'].'", "'.$_SESSION['pricebestoffer'].'", "'.$date.'", "'.$time.'")');
         $records->execute();

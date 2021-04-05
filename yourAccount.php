@@ -28,7 +28,7 @@
     }
 
     if($_SESSION['profilFound']==0 || isset($_SESSION['profilFound'])==0){
-        header('Location: http://localhost/GitHub/Ebay/login.php');
+        header('Location: http://localhost/GitHub/Ebay/login.php'); //if the user is not connected we lead him to login page
     }
     elseif($_SESSION['profilFound']==1){ //if the user is a customer
         echo '<h2> Your history </h2>';
@@ -43,7 +43,7 @@
     $stmt2 = $db->prepare('SELECT * FROM item WHERE id="'.$order['id_item'].'"');
     $stmt2->execute();
     $cigar = $stmt2->fetchAll();
-    foreach($cigar as $c):
+    foreach($cigar as $c): //we display all items he bought 
         
         echo "<div class='product'>";
         
@@ -79,7 +79,7 @@
     $stmt2 = $db->prepare('SELECT * FROM item WHERE idseller="'.$_SESSION['id'].'"');
     $stmt2->execute();
     $cigar = $stmt2->fetchAll();
-    foreach($cigar as $c):
+    foreach($cigar as $c): // we display all items the seller has sold or is selling
         
         echo "<div class='product'>";
         

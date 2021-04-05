@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="products.css">
+    <link rel="stylesheet" href="cart.css">
     <title>Cart</title>
      <link rel="icon" type="image/png" href="icon.png"/>
 </head>
@@ -87,7 +87,7 @@ session_start();
                                 $stmt->execute();
                             }*/
     
-                            if ($price2 == NULL){ // if it is the first 
+                            if ($price2 == NULL){ // if it is the first bid
                                 $stmt = $db->prepare('UPDATE auctions SET price2 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"'); //we set the price2 
                                 $stmt->execute();
                                 $stmt = $db->prepare('UPDATE auctions SET price1 = "'.($price1+1).'" WHERE id_item="'.$_POST['id'].'"');//we set the price1
@@ -97,7 +97,7 @@ session_start();
                                 $stmt = $db->prepare('UPDATE auctions SET id_buyer = "'.$_SESSION['id'].'" WHERE id_item="'.$_POST['id'].'"');//we set the id of the buyer
                                 $stmt->execute();
                             }
-                            elseif ($_POST['bidAmout'] > $price2){
+                            elseif ($_POST['bidAmout'] > $price2){  // if the price is bigger than the hidden price (price2)
                                 $stmt = $db->prepare('UPDATE auctions SET price2 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
                                 $stmt->execute();
                                 $stmt = $db->prepare('UPDATE auctions SET price1 = "'.($price2+1).'" WHERE id_item="'.$_POST['id'].'"');
@@ -107,13 +107,13 @@ session_start();
                                 $stmt = $db->prepare('UPDATE auctions SET id_buyer = "'.$_SESSION['id'].'" WHERE id_item="'.$_POST['id'].'"');
                                 $stmt->execute();
                             }
-                            elseif ($_POST['bidAmout'] == $price2){
+                            elseif ($_POST['bidAmout'] == $price2){ //if the price is equal than the price2
                                 $stmt = $db->prepare('UPDATE auctions SET price1 = "'.$_POST['bidAmout'].'" WHERE id_item="'.$_POST['id'].'"');
                                 $stmt->execute();
                                 $stmt = $db->prepare('UPDATE item SET price = "'.$_POST['bidAmout'].'" WHERE id="'.$_POST['id'].'"');
                                 $stmt->execute();
                             }
-                            elseif ($_POST['bidAmout'] < $price2){
+                            elseif ($_POST['bidAmout'] < $price2){ //if the price is betwenn the price1 and price2
                                 $stmt = $db->prepare('UPDATE auctions SET price1 = "'.($_POST['bidAmout']+1).'" WHERE id_item="'.$_POST['id'].'"');
                                 $stmt->execute();
                                 $stmt = $db->prepare('UPDATE item SET price = "'.($_POST['bidAmout']+1).'" WHERE id="'.$_POST['id'].'"');
@@ -125,9 +125,9 @@ session_start();
         }
     }
 
-    if (isset($_POST['bestOffer'])){
+    if (isset($_POST['bestOffer'])){  //if best offer button is clicked
         if ($_SESSION['profilFound']!=1){
-            header('Location: http://localhost/GitHub/Ebay/login.php');
+            header('Location: http://localhost/GitHub/Ebay/login.php'); //if nobody is connected we go to login
         }
         else{
             if ($_POST['bestOfferAmount']!='' && $_POST['bestOfferAmount']!='0'){
@@ -168,7 +168,7 @@ session_start();
         echo "<div class='content'>";
         
         foreach($items as $item):
-            if ($item['auction']==NULL){
+            if ($item['auction']==NULL){ //if the item isnt sold by auction we delete object of the card after 1 hour
                 $dayItem = substr($item['date'],8,2);
                 $differenceTime = strtotime($time)-strtotime($item['time']);
                 if($dayItem != $day){
@@ -181,7 +181,7 @@ session_start();
                 }
             }
 
-            elseif ($item['auction']==1){
+            elseif ($item['auction']==1){ // if the item is sold by auction, we delete the item after the end of the auction
                 $stmt2 = $db->prepare('SELECT * FROM auctions WHERE id_item="'.$item['idItem'].'"');
                 $stmt2->execute();
                 $auctions = $stmt2->fetchAll();
@@ -198,7 +198,7 @@ session_start();
 
             }
     endforeach;
-
+    /*Display of items with the button that they need*/
     $stmt = $db->prepare('SELECT * FROM cart WHERE idCustomer="'.$_SESSION['id'].'"');
         $stmt->execute();
         $items = $stmt->fetchAll();
@@ -217,7 +217,7 @@ session_start();
 
             //echo "<img src=Cigars_pictures/".$c['photos']." width='150px' >";
         
-            echo $c['photos'] = substr($c['photos'],36); // thomas enleve cette ligne si pour toi ça bug
+            $c['photos'] = substr($c['photos'],36); // thomas enleve cette ligne si pour toi ça bug
             echo "<img src=Cigars_pictures/".$c['photos']." width='150px' >";
 
 

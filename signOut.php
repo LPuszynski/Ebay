@@ -11,9 +11,9 @@
 
 <?php
     session_start();
-    $_SESSION['profilFound']=0;
-    $_SESSION['id']=0;
-    header('Location: http://localhost/GitHub/Ebay/index.php');
+    $_SESSION['profilFound']=0; // we just set this variable to 0
+    $_SESSION['id']=0; // and the id go back to 0 because a guest has no id so we consider his id as 0
+    header('Location: http://localhost/GitHub/Ebay/index.php'); // browser redirection
 ?>
 
  </body>

@@ -29,7 +29,7 @@
 <?php
 	session_start();
 
-	//connection cith the db
+	//connection with the db
 	try
 	{
 
@@ -42,7 +42,11 @@
 			die('Erreur : ' . $e->getMessage());
 	}
 
-	if(isset($_SESSION['profilFound']) && $_SESSION['profilFound']==1){
+	if(isset($_SESSION['id'])==0){
+		$_SESSION['id']=0;
+	}
+
+	if(isset($_SESSION['profilFound']) && $_SESSION['profilFound']==1){ //if the user is a buyer
 		$i=0;
 		date_default_timezone_set('Europe/Paris');
 		$date = date('y-m-d');
@@ -51,7 +55,7 @@
 		$stmt->execute();
 		$items = $stmt->fetchAll();
 	
-		foreach($items as $item):
+		foreach($items as $item): //we get all the informations of all on the auctions he is currently winning
 			$i=$i+1;
 			$idAuction = $item['id'];
 			$idItem = $item['id_item'];
@@ -63,18 +67,19 @@
 		endforeach;
 
 		if($i>0){
-			if ((strtotime($date)-strtotime($dateEnd)==0 && strtotime($time)<strtotime($timeEnd)) || (strtotime($date)>=strtotime($dateStart) && strtotime($date)<strtotime($dateEnd))){ //we check if its still on time
+			if ((strtotime($date)-strtotime($dateEnd)==0 && strtotime($time)<strtotime($timeEnd)) || (strtotime($date)>=strtotime($dateStart) && strtotime($date)<strtotime($dateEnd))){
 			}
-			else{
-				$stmt = $db->prepare('UPDATE auctions SET end = "1" WHERE id="'.$idAuction.'"');
+			else{ // if the time is over
+				$stmt = $db->prepare('UPDATE auctions SET end = "1" WHERE id="'.$idAuction.'"'); //we set the auction as "end"
 				$stmt->execute();
-				$stmt = $db->prepare('UPDATE item SET price = "'.$_SESSION['priceItemAuction'].'" WHERE id="'.$idItem.'"');
+				$stmt = $db->prepare('UPDATE item SET price = "'.$_SESSION['priceItemAuction'].'" WHERE id="'.$idItem.'"'); // we change the real price of the item for payment
 				$stmt->execute();
 			}
 		}
 	}
-?>
+//there is a lot of if conditions below because we wanted to personalise the menu for each type of user*/
 
+?>
 
 
 <div id="tlois">

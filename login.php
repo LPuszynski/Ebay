@@ -36,14 +36,29 @@
 <li> Categories
             <ul>
 <li><a href="cigars.php">Cigars</a></li>
-<li><a href="">Accessories</li></li>
-</ul><li> <a href="sellObject.php">Sell </a></li>
-<li><a href="">Your account </a></li></ul>
-<a href="cart.php"><i class="fas fa-shopping-cart"></i></a>
-</div><br><br>
-
+<li><a href="">Accessories</li></li></ul>
 <?php
 session_start();
+	if($_SESSION['profilFound']==2){
+		echo '<li> <a href="sellObject.php">Sell </a></li>';
+	}
+?>
+<?php
+	if($_SESSION['profilFound']!=3){
+		echo '<li><a href="yourAccount.php">Your account </a></li></ul>';
+	}
+?>
+
+<?php
+if($_SESSION['profilFound']!=0 && $_SESSION['profilFound']!=3){
+	echo '<div id="personnalInfo">'.$_SESSION['firstname'].'&emsp; &emsp;'.$_SESSION['lastname'].'</div>';
+	echo '<a href="message.php" id="message"><img src="message.png" width="50px"></i></a>';
+}
+?>
+<a href="cart.php"><i class="fas fa-shopping-cart"></i></a>
+</div>
+
+<?php
 $_SESSION['profilFound'] = 0;
 //connection cith the db
 try
@@ -90,7 +105,7 @@ if (isset ($_POST['submit'])){
 			$_SESSION['expiration_date']=$user['expiration_date'];
 			$_SESSION['cvc']=$user['cvc'];
 			$_SESSION['profilFound'] = 1; //He is a customer in the DB
-			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
+			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Browser redirection */
 		}
 	endforeach;
 
@@ -104,7 +119,7 @@ if (isset ($_POST['submit'])){
 			$_SESSION['lastname']=$user['lastname'];
 			$_SESSION['firstname']=$user['firstname'];	
 			$_SESSION['profilFound'] = 2; //He is a seller in the DB
-			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
+			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Browser redirection */
 		}
 	endforeach;
 
@@ -115,14 +130,15 @@ if (isset ($_POST['submit'])){
 		if (strcmp ( $user['password'], $password) == 0){
 			$_SESSION['id']=$user['id'];
 			$_SESSION['profilFound'] = 3; //He is a admin in the DB
-			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
+			header("Location: http://localhost/GitHub/Ebay/index.php"); /* Browser redirection */
 		}
 	endforeach;
 	if($_SESSION['profilFound'] == 0){    //in order to allow a visitor to have a cart
 		$_SESSION['id']=0;
-		header("Location: http://localhost/GitHub/Ebay/index.php"); /* Redirection du navigateur */
+		header("Location: http://localhost/GitHub/Ebay/index.php"); /* Browser redirection */
 	}
 
+	//if objects in the cart while not connected, the objects are put in the cart of the one who connects
 	$stmt = $db->prepare('SELECT * FROM cart WHERE idCustomer="0"');
 	$stmt->execute();
 	$users = $stmt->fetchAll();

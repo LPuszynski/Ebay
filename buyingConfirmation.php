@@ -112,12 +112,14 @@
             endforeach;
 
     if (isset ($_POST['change'])){
-        header("Location: http://localhost/GitHub/Ebay/buyNow.php"); /* Redirection du navigateur */
+        header("Location: http://localhost/GitHub/Ebay/buyNow.php"); /* Browser redirection */
     }
 
     if (isset ($_POST['confirm'])){
-        header("Location: http://localhost/GitHub/Ebay/buyingBDD.php"); /* Redirection du navigateur */
+        header("Location: http://localhost/GitHub/Ebay/buyingBDD.php"); /* Browser redirection */
     }
+
+    //for making card number private
     $numberCardend = substr($_SESSION['cardnumber'],4,strlen($_SESSION['cardnumber']));
     $numberStartCardNumber = substr($_SESSION['cardnumber'],0,4);
 ?>

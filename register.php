@@ -34,11 +34,27 @@
 <li> Categories
             <ul>
 <li><a href="cigars.php">Cigars</a></li>
-<li><a href="">Accessories</li></li>
-</ul><li> <a href="sellObject.php">Sell </a></li>
-<li><a href="">Your account </a></li></ul>
+<li><a href="">Accessories</li></li></ul>
+<?php
+session_start();
+	if($_SESSION['profilFound']==2){
+		echo '<li> <a href="sellObject.php">Sell </a></li>';
+	}
+?>
+<?php
+	if($_SESSION['profilFound']!=3){
+		echo '<li><a href="yourAccount.php">Your account </a></li></ul>';
+	}
+?>
+
+<?php
+if($_SESSION['profilFound']!=0 && $_SESSION['profilFound']!=3){
+	echo '<div id="personnalInfo">'.$_SESSION['firstname'].'&emsp; &emsp;'.$_SESSION['lastname'].'</div>';
+	echo '<a href="message.php" id="message"><img src="message.png" width="50px"></i></a>';
+}
+?>
 <a href="cart.php"><i class="fas fa-shopping-cart"></i></a>
-</div><br><br>
+</div>
 
 <?php
 try
@@ -51,7 +67,7 @@ catch (Exception $e)
         die('Erreur : ' . $e->getMessage());
 }
 
-if (isset ($_POST['submit'])){
+if (isset ($_POST['submit'])){ //we get all the information that the user enter
 	
 	if (isset ($_POST['firstname']))
     {
@@ -98,7 +114,7 @@ if (isset ($_POST['submit'])){
 		$cvc=$_POST['cvc'];
 	}
 
-
+//we put all information on database
 $records = $db->prepare('INSERT INTO customer (email, password, lastname, firstname, adress_line1, city, postal_code, fullname, cardnumber, expiration_date, cvc ) VALUES ("'.$mail.'", "'.$password.'", "'.$lastname.'", "'.$firstname.'", "'.$address.'", "'.$city.'", "'.$postal_code.'", "'.$fullName.'", "'.$card_number.'", "'.$expiration_date.'", "'.$cvc.'")');
 $records->execute();
 }

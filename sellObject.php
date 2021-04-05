@@ -123,7 +123,7 @@ Email info@cigarshop.com <br>
         die('Erreur : ' . $e->getMessage());
     }
 
-        if(isset($_POST['submit'])){
+        if(isset($_POST['submit'])){ //we get all information that we need on the object we want to sell
             $category =$_POST['Category'];
             $name = $_POST['name'];
             $picture=$_POST['product_picture']; 
@@ -134,6 +134,7 @@ Email info@cigarshop.com <br>
             $timeEnd = $_POST['endTime'];
             $dateStart = $_POST['startDate'];
             $dateEnd = $_POST['endDate'];
+            //we put them on the database
             $records = $db->prepare('INSERT INTO item (name, photos, description, price, category, BuyNow, idseller) VALUES ("'.$name.'", "'.$picture.'", "'.$description.'", "'.$price.'", "'.$category.'","'.$buyItNow.'", "'.$_SESSION['id'].'")');
             $records->execute();
 
@@ -149,28 +150,11 @@ Email info@cigarshop.com <br>
                 endforeach;
                 echo end($array);  // id of the object that the seller just enter
 
+                //we set an auction on the auctions table
                 $records = $db->prepare('INSERT INTO auctions (id_seller, price1, id_item, timeStart, timeEnd, dateStart, dateEnd) VALUES ("'.$_SESSION['id'].'", "'.$_POST['price'].'", "'.end($array).'", "'.$timeStart.'", "'.$timeEnd.'","'.$dateStart.'", "'.$dateEnd.'")');
                 $records->execute();
 
             }
-
-            /*if ($buyItNow == 2 || $buyItNow == 3){      //if the type of the sell is by Best Offer
-                $stmt = $db->prepare('SELECT * FROM item WHERE idseller="'.$_SESSION['id'].'"');
-                $stmt->execute();
-                $items = $stmt->fetchAll();
-
-
-                $array = array();
-                foreach($items as $item):
-                    $array[] = $item['id'];
-                endforeach;
-                echo end($array);  // id of the object that the seller just enter
-
-                $records = $db->prepare('INSERT INTO bestoffer (id_seller, price1, id_item, timeStart, timeEnd, dateStart, dateEnd) VALUES ("'.$_SESSION['id'].'", "'.$_POST['price'].'", "'.end($array).'", "'.$timeStart.'", "'.$timeEnd.'","'.$dateStart.'", "'.$dateEnd.'")');
-                $records->execute();
-
-            }*/
-
         }
     ?>
 
