@@ -36,11 +36,11 @@
 <li> Categories
             <ul>
 <li><a href="cigars.php">Cigars</a></li>
-<li><a href="">Accessories</li></li></ul>
+<li><a href="Accessories.php">Accessories</li></li></ul>
 <?php
 session_start();
 	if($_SESSION['profilFound']==2){
-		echo '<li> <a href="sellObject.php">Sell </a></li>';
+		echo '</ul><li> <a href="sellObject.php">Sell </a></li>';
 	}
 ?>
 <?php
@@ -64,8 +64,8 @@ $_SESSION['profilFound'] = 0;
 try
 {
 
-//$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', '');	
-$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
+$db = new PDO('mysql:host=localhost;port=3307;dbname=ebay;', 'root', '');	
+//$db = new PDO('mysql:host=localhost;port=3306;dbname=ebay;', 'root', ''); /* Port de thomas = 3307 / Port de Lois = 3306 */
 
 }
 catch (Exception $e)
